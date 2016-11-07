@@ -6,6 +6,7 @@
 package InterfaceMain;
 
 import InterfaceCadastramentoPainels.NovaLoja;
+import InterfaceCadastramentoPainels.NovaNotaCompra;
 import InterfaceCadastramentoPainels.NovoFuncionario;
 import InterfaceCadastramentoPainels.NovoProduto;
 import InterfaceCadastramentoPainels.NovoProdutoAtomico;
@@ -81,6 +82,7 @@ public class Main extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenuItem8 = new javax.swing.JMenuItem();
+        jMenuItem9 = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
@@ -209,6 +211,15 @@ public class Main extends javax.swing.JFrame {
         });
         gerencialMenu.add(jMenuItem8);
 
+        jMenuItem9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/people-trading.png"))); // NOI18N
+        jMenuItem9.setText("Nova Nota de Compra");
+        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem9ActionPerformed(evt);
+            }
+        });
+        gerencialMenu.add(jMenuItem9);
+
         jMenuBar2.add(gerencialMenu);
 
         jMenu1.setText("Sobre");
@@ -303,6 +314,10 @@ public class Main extends javax.swing.JFrame {
     private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
         this.chamarNovaLoja();
     }//GEN-LAST:event_jMenuItem8ActionPerformed
+
+    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+        this.chamarNovaNotaCompra();
+    }//GEN-LAST:event_jMenuItem9ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -415,7 +430,12 @@ public class Main extends javax.swing.JFrame {
         principal.revalidate();
         principal.repaint();
     }
-    
+    public void chamarNovaNotaCompra(){
+        principal.removeAll();
+        principal.add(new NovaNotaCompra(this));
+        principal.revalidate();
+        principal.repaint();
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu funcionalidades;
     private javax.swing.JMenu gerencialMenu;
@@ -432,6 +452,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
+    private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JMenuItem loginmenu;
     private javax.swing.JMenuItem logout;
