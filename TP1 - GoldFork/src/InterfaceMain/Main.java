@@ -5,16 +5,19 @@
  */
 package InterfaceMain;
 
-import InterfaceCadastramentoPainels.NovaLoja;
-import InterfaceCadastramentoPainels.NovaNotaCompra;
-import InterfaceCadastramentoPainels.NovoFuncionario;
-import InterfaceCadastramentoPainels.NovoProduto;
-import InterfaceCadastramentoPainels.NovoProdutoAtomico;
+import InterfaceCadastramentoPainelsAdministrativo.NovaLanchonete_Administrativo;
+import InterfaceCadastramentoPainelsGerencial.NovaNotaCompra;
+import InterfaceCadastramentoPainelsAdministrativo.NovaNotaCompra_Administrativo;
+import InterfaceCadastramentoPainelsAdministrativo.NovoFornecedor_Administrativo;
+import InterfaceCadastramentoPainelsGerencial.NovoFuncionario;
+import InterfaceCadastramentoPainelsAdministrativo.NovoFuncionario_Administrativo;
+import InterfaceCadastramentoPainelsAdministrativo.NovoProduto_Administrativo;
+import InterfaceCadastramentoPainelsAdministrativo.NovoProdutoAtomico_Administrativo;
 import InterfaceCommonPainels.Desenvolvedores;
 import InterfaceCommonPainels.Login;
 import InterfaceCommonPainels.MenuInicial;
-import InterfaceCommonPainels.Relatorios;
-import InterfaceCommonPainels.Vendas;
+import InterfaceRelatoriosPainels.Relatorios;
+import InterfaceVendas.Vendas;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -32,6 +35,9 @@ import javax.swing.JOptionPane;
  */
 public class Main extends javax.swing.JFrame {
     private String nomeUsuarioLogado;
+    private int idUsuarioLogado;
+    private int permissaoUsuarioLogado; // 0==dono, 1==gerente, 2==caixa
+    private int idUsuarioLoja; //id da loja que o usuario trabalha, caso seja dono será 0;
     /**
      * Creates new form Main
      */
@@ -76,13 +82,17 @@ public class Main extends javax.swing.JFrame {
         jMenuItem3 = new javax.swing.JMenuItem();
         funcionalidades = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
-        relatorios = new javax.swing.JMenuItem();
         gerencialMenu = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem7 = new javax.swing.JMenuItem();
+        novoFuncMenuGerencial = new javax.swing.JMenuItem();
+        menuNotaCompra = new javax.swing.JMenuItem();
+        administrativoMenu = new javax.swing.JMenu();
         jMenuItem8 = new javax.swing.JMenuItem();
-        jMenuItem9 = new javax.swing.JMenuItem();
+        jMenuItem11 = new javax.swing.JMenuItem();
+        jMenuItem7 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem10 = new javax.swing.JMenuItem();
+        menuNotaCompraAdministrativo = new javax.swing.JMenuItem();
+        relatorios = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
@@ -162,6 +172,86 @@ public class Main extends javax.swing.JFrame {
         });
         funcionalidades.add(jMenuItem4);
 
+        jMenuBar2.add(funcionalidades);
+
+        gerencialMenu.setText("Gerencial");
+
+        novoFuncMenuGerencial.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/add-new-user.png"))); // NOI18N
+        novoFuncMenuGerencial.setText("Novo Funcionário");
+        novoFuncMenuGerencial.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                novoFuncMenuGerencialActionPerformed(evt);
+            }
+        });
+        gerencialMenu.add(novoFuncMenuGerencial);
+
+        menuNotaCompra.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/coins-on-hand.png"))); // NOI18N
+        menuNotaCompra.setText("Nova Nota de Compra");
+        menuNotaCompra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuNotaCompraActionPerformed(evt);
+            }
+        });
+        gerencialMenu.add(menuNotaCompra);
+
+        jMenuBar2.add(gerencialMenu);
+
+        administrativoMenu.setText("Administrativo");
+
+        jMenuItem8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/shopping-cart-sign.png"))); // NOI18N
+        jMenuItem8.setText("Nova Lanchonete");
+        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem8ActionPerformed(evt);
+            }
+        });
+        administrativoMenu.add(jMenuItem8);
+
+        jMenuItem11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/add-new-user.png"))); // NOI18N
+        jMenuItem11.setText("Novo Funcionário");
+        jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem11ActionPerformed(evt);
+            }
+        });
+        administrativoMenu.add(jMenuItem11);
+
+        jMenuItem7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/apple-black-silhouette-with-a-leaf.png"))); // NOI18N
+        jMenuItem7.setText("Novo Produto Atômico");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
+        administrativoMenu.add(jMenuItem7);
+
+        jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/package.png"))); // NOI18N
+        jMenuItem2.setText("Novo Produto");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        administrativoMenu.add(jMenuItem2);
+
+        jMenuItem10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/people-trading.png"))); // NOI18N
+        jMenuItem10.setText("Novo Fornecedor");
+        jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem10ActionPerformed(evt);
+            }
+        });
+        administrativoMenu.add(jMenuItem10);
+
+        menuNotaCompraAdministrativo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/coins-on-hand.png"))); // NOI18N
+        menuNotaCompraAdministrativo.setText("Nova Nota de Compra");
+        menuNotaCompraAdministrativo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuNotaCompraAdministrativoActionPerformed(evt);
+            }
+        });
+        administrativoMenu.add(menuNotaCompraAdministrativo);
+
         relatorios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/reporting.png"))); // NOI18N
         relatorios.setText("Relatórios");
         relatorios.addActionListener(new java.awt.event.ActionListener() {
@@ -169,58 +259,9 @@ public class Main extends javax.swing.JFrame {
                 relatoriosActionPerformed(evt);
             }
         });
-        funcionalidades.add(relatorios);
+        administrativoMenu.add(relatorios);
 
-        jMenuBar2.add(funcionalidades);
-
-        gerencialMenu.setText("Gerencial");
-
-        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/add-new-user.png"))); // NOI18N
-        jMenuItem1.setText("Cadastrar Novo Funcionário");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
-            }
-        });
-        gerencialMenu.add(jMenuItem1);
-
-        jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/package.png"))); // NOI18N
-        jMenuItem2.setText("Cadastrar Novo Produto");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
-            }
-        });
-        gerencialMenu.add(jMenuItem2);
-
-        jMenuItem7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/apple-black-silhouette-with-a-leaf.png"))); // NOI18N
-        jMenuItem7.setText("Cadastrar Novo Produto Atômico");
-        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem7ActionPerformed(evt);
-            }
-        });
-        gerencialMenu.add(jMenuItem7);
-
-        jMenuItem8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/shopping-cart-sign.png"))); // NOI18N
-        jMenuItem8.setText("Cadastrar Nova Loja");
-        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem8ActionPerformed(evt);
-            }
-        });
-        gerencialMenu.add(jMenuItem8);
-
-        jMenuItem9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/people-trading.png"))); // NOI18N
-        jMenuItem9.setText("Nova Nota de Compra");
-        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem9ActionPerformed(evt);
-            }
-        });
-        gerencialMenu.add(jMenuItem9);
-
-        jMenuBar2.add(gerencialMenu);
+        jMenuBar2.add(administrativoMenu);
 
         jMenu1.setText("Sobre");
 
@@ -299,25 +340,37 @@ public class Main extends javax.swing.JFrame {
         this.chamarRelatorio();
     }//GEN-LAST:event_relatoriosActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void novoFuncMenuGerencialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_novoFuncMenuGerencialActionPerformed
         this.chamarNovoFuncionario();
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_novoFuncMenuGerencialActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        this.chamarNovoProduto();
+        this.chamarNovoProduto_Administrativo();
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
-        this.chamarNovoProdutoAtomico();
+        this.chamarNovoProdutoAtomico_Administrativo();
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
-        this.chamarNovaLoja();
+        this.chamarNovaLanchonete_Administrativo();
     }//GEN-LAST:event_jMenuItem8ActionPerformed
 
-    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+    private void menuNotaCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuNotaCompraActionPerformed
         this.chamarNovaNotaCompra();
-    }//GEN-LAST:event_jMenuItem9ActionPerformed
+    }//GEN-LAST:event_menuNotaCompraActionPerformed
+
+    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
+        this.chamarNovoFornecedorAdministrativo();
+    }//GEN-LAST:event_jMenuItem10ActionPerformed
+
+    private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
+        this.chamarCadastrarFuncionarioAdministrativo();
+    }//GEN-LAST:event_jMenuItem11ActionPerformed
+
+    private void menuNotaCompraAdministrativoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuNotaCompraAdministrativoActionPerformed
+        this.chamarNovaNotaDeCompraAdministrativo();
+    }//GEN-LAST:event_menuNotaCompraAdministrativoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -354,8 +407,38 @@ public class Main extends javax.swing.JFrame {
         });
     }
     
+    //sets
+    public void setIdUsuarioLoja(int idUsuarioLoja) {
+        this.idUsuarioLoja = idUsuarioLoja;
+    }
+
     public void setNomeUsuarioLogado(String nomeUsuario) {
         this.nomeUsuarioLogado = nomeUsuario;
+    }
+
+    public void setIdUsuarioLogado(int idUsuarioLogado) {
+        this.idUsuarioLogado = idUsuarioLogado;
+    }
+
+    public void setPermissaoUsuarioLogado(int permissaoUsuarioLogado) {
+        this.permissaoUsuarioLogado = permissaoUsuarioLogado;
+    }
+    
+    //gets
+    public int getIdUsuarioLoja() {
+        return idUsuarioLoja;
+    }
+    
+    public String getNomeUsuarioLogado() {
+        return nomeUsuarioLogado;
+    }
+
+    public int getIdUsuarioLogado() {
+        return idUsuarioLogado;
+    }
+
+    public int getPermissaoUsuarioLogado() {
+        return permissaoUsuarioLogado;
     }
     
     //travar menus antes do login
@@ -364,13 +447,39 @@ public class Main extends javax.swing.JFrame {
         inicio.setEnabled(false);
         logout.setEnabled(false);
         loginmenu.setEnabled(true);
+        gerencialMenu.setEnabled(false);
+        administrativoMenu.setEnabled(false);
     }
     //destravar menus após o login
     public void destravarMenus(){
-        funcionalidades.setEnabled(true);
-        inicio.setEnabled(true);
-        logout.setEnabled(true);
-        loginmenu.setEnabled(false);
+        if(this.permissaoUsuarioLogado == 0){ //login dono
+            funcionalidades.setEnabled(false);
+            inicio.setEnabled(true);
+            logout.setEnabled(true);
+            loginmenu.setEnabled(false);
+            gerencialMenu.setEnabled(false);
+            administrativoMenu.setEnabled(true);
+            novoFuncMenuGerencial.setEnabled(false);
+            menuNotaCompra.setEnabled(false);
+        }
+        else if(this.permissaoUsuarioLogado == 1){ //login gerente
+            funcionalidades.setEnabled(false);
+            inicio.setEnabled(true);
+            logout.setEnabled(true);
+            loginmenu.setEnabled(false);
+            gerencialMenu.setEnabled(true);
+            administrativoMenu.setEnabled(false);
+            novoFuncMenuGerencial.setEnabled(true);
+            menuNotaCompra.setEnabled(true);
+        }
+        else{
+            funcionalidades.setEnabled(true); //login caixa
+            inicio.setEnabled(true);
+            logout.setEnabled(true);
+            loginmenu.setEnabled(false);
+            gerencialMenu.setEnabled(false);
+            administrativoMenu.setEnabled(false);
+        }     
     }
     
     //chamadores de janela comuns
@@ -412,31 +521,54 @@ public class Main extends javax.swing.JFrame {
         principal.revalidate();
         principal.repaint();
     }
-    public void chamarNovoProduto(){
-        principal.removeAll();
-        principal.add(new NovoProduto(this));
-        principal.revalidate();
-        principal.repaint();
-    }
-    public void chamarNovoProdutoAtomico(){
-        principal.removeAll();
-        principal.add(new NovoProdutoAtomico(this));
-        principal.revalidate();
-        principal.repaint();
-    }
-    public void chamarNovaLoja(){
-        principal.removeAll();
-        principal.add(new NovaLoja(this));
-        principal.revalidate();
-        principal.repaint();
-    }
+
     public void chamarNovaNotaCompra(){
         principal.removeAll();
         principal.add(new NovaNotaCompra(this));
         principal.revalidate();
         principal.repaint();
     }
+    
+    //chamar janelas menu administrativo
+    public void chamarNovoProduto_Administrativo(){
+        principal.removeAll();
+        principal.add(new NovoProduto_Administrativo(this));
+        principal.revalidate();
+        principal.repaint();
+    }
+    public void chamarNovoProdutoAtomico_Administrativo(){
+        principal.removeAll();
+        principal.add(new NovoProdutoAtomico_Administrativo(this));
+        principal.revalidate();
+        principal.repaint();
+    }
+    public void chamarNovaLanchonete_Administrativo(){
+        principal.removeAll();
+        principal.add(new NovaLanchonete_Administrativo(this));
+        principal.revalidate();
+        principal.repaint();
+    }
+    public void chamarNovoFornecedorAdministrativo(){
+        principal.removeAll();
+        principal.add(new NovoFornecedor_Administrativo(this));
+        principal.revalidate();
+        principal.repaint();
+    }
+    public void chamarCadastrarFuncionarioAdministrativo(){
+        principal.removeAll();
+        principal.add(new NovoFuncionario_Administrativo(this));
+        principal.revalidate();
+        principal.repaint();
+    }
+    public void chamarNovaNotaDeCompraAdministrativo(){
+        principal.removeAll();
+        principal.add(new NovaNotaCompra_Administrativo(this));
+        principal.revalidate();
+        principal.repaint();
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenu administrativoMenu;
     private javax.swing.JMenu funcionalidades;
     private javax.swing.JMenu gerencialMenu;
     private javax.swing.JMenuItem inicio;
@@ -444,7 +576,8 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar2;
-    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem10;
+    private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
@@ -452,10 +585,12 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
-    private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JMenuItem loginmenu;
     private javax.swing.JMenuItem logout;
+    private javax.swing.JMenuItem menuNotaCompra;
+    private javax.swing.JMenuItem menuNotaCompraAdministrativo;
+    private javax.swing.JMenuItem novoFuncMenuGerencial;
     private javax.swing.JPanel principal;
     private javax.swing.JMenuItem relatorios;
     // End of variables declaration//GEN-END:variables
