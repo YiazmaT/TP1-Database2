@@ -355,7 +355,7 @@ public class NovaNotaCompra_Administrativo extends javax.swing.JPanel {
         String data = dtf.format(localDate);
         
         BancoDeDados.cadastrarNovaNotaDeCompra(data, this.valorTotalNota, idFornecedor, idLanchonete, this.itensNota);
-        pai.chamarNovaNotaDeCompraAdministrativo();
+        pai.chamarNovaNotaDeCompra_Administrativo();
     }//GEN-LAST:event_jButton3ActionPerformed
     
     private void atualizarTabelaComposicao(ArrayList<ProdutoAtomico> comp){

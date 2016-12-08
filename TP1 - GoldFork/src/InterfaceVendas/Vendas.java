@@ -370,6 +370,12 @@ public class Vendas extends javax.swing.JPanel {
             return;
         }
         
+        boolean possuiEstoque = BancoDeDados.possuiEstoqueParaVender(seraAdicionado, pai.getIdUsuarioLoja());
+        if(possuiEstoque == false){
+            JOptionPane.showMessageDialog(null, "Estoque insuficiente!!");
+            return;
+        }
+        
         //adicinoar na tabela;
         this.produtoComprados.add(seraAdicionado);
         listarTabelaComprados(this.produtoComprados);
@@ -419,13 +425,21 @@ public class Vendas extends javax.swing.JPanel {
         int novaQuantidade = Integer.parseInt(n);
         if(novaQuantidade <=0) {this.erro(1); return;}
         
+        int copia = this.produtoComprados.get(linha).getQuantidade();
         this.produtoComprados.get(linha).setQuantidade(novaQuantidade);
+        boolean possuiEstoque = BancoDeDados.possuiEstoqueParaVender(this.produtoComprados.get(linha), pai.getIdUsuarioLoja());
+        if(possuiEstoque == false){
+            JOptionPane.showMessageDialog(null, "Estoque insuficiente");
+            this.produtoComprados.get(linha).setQuantidade(copia);
+            return;
+        }
+        
         this.listarTabelaComprados(this.produtoComprados);
         return;
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void pagamentoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pagamentoButtonActionPerformed
-        PagamentoDialog p = new PagamentoDialog(pai, true, this, totalNota);
+        PagamentoDialog p = new PagamentoDialog(pai, true, this, totalNota, this.pai);
         p.setLocationRelativeTo(this);
         p.setVisible(true);
     }//GEN-LAST:event_pagamentoButtonActionPerformed
@@ -471,6 +485,11 @@ public class Vendas extends javax.swing.JPanel {
         pagamentoButton.setEnabled(true);
     }
 
+    public ArrayList<Produto> getProdutoComprados() {
+        return produtoComprados;
+    }
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField codigoField;
     private javax.swing.JButton jButton1;

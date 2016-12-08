@@ -5,6 +5,11 @@
  */
 package InterfaceVendas;
 
+import BancoDeDados.BancoDeDados;
+import ClasseProdutos.Produto;
+import InterfaceMain.Main;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -15,17 +20,22 @@ import javax.swing.table.DefaultTableModel;
  */
 public class PagamentoDialog extends javax.swing.JDialog {
     private Vendas pai;
+    private Main framePai;
     private ArrayList<Pagamento> pagamentosCartao = new ArrayList<Pagamento>();
     private float totalNota;
     private float totalRecebido;
     private float recebidoCartao;
     private float recebidoDinheiro;
+    
+    private float troco;
     /**
      * Creates new form Pagamento
      */
-    public PagamentoDialog(java.awt.Frame parent, boolean modal, Vendas pai, float totalNota) {
+    public PagamentoDialog(java.awt.Frame parent, boolean modal, Vendas pai, float totalNota, Main framepai) {
         super(parent, modal);
         initComponents();
+        this.troco = troco;
+        this.framePai = framepai;
         this.pai=pai;
         this.totalNota = totalNota;
         this.totalRecebido = 0.0f;
@@ -355,6 +365,11 @@ public class PagamentoDialog extends javax.swing.JDialog {
         finalizarPagamentoButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         finalizarPagamentoButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/give-money.png"))); // NOI18N
         finalizarPagamentoButton.setText("Finalizar Pagamento");
+        finalizarPagamentoButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                finalizarPagamentoButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -538,6 +553,7 @@ public class PagamentoDialog extends javax.swing.JDialog {
             
             if(this.totalRecebido > this.totalNota){
                 trocoLabel.setText("R$"+String.format("%.2f", this.totalRecebido-this.totalNota));
+                this.troco = this.totalRecebido-this.totalNota;
             }
         }
         //cartao
@@ -564,12 +580,20 @@ public class PagamentoDialog extends javax.swing.JDialog {
             //addnar pagamento e atualizar tabela;
             this.pagamentosCartao.add(p);
             this.atualizarPagamentosCartao();
+            
+            if(this.totalRecebido > this.totalNota){
+                trocoLabel.setText("R$"+String.format("%.2f", this.totalRecebido-this.totalNota));
+                this.troco = this.totalRecebido-this.totalNota;
+            }
         }
         
         //resetar campos
         valorPagamentoField.setText("");
         u4digitosField.setText("");
         bandeiraField.setText("");
+        
+        //verificar se ja pode finalizar o pagamento
+        this.verificarSeJaPodeFinalizarPagamento();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void removerCartao1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removerCartao1ActionPerformed
@@ -578,6 +602,9 @@ public class PagamentoDialog extends javax.swing.JDialog {
         this.recebidoDinheiro = 0.0f;
         this.totalRecebidoLabel.setText("R$"+String.format("%.2f", this.totalRecebido));
         trocoLabel.setText("R$0,00");
+        
+        //verificar se ja pode finalizar o pagamento
+        this.verificarSeJaPodeFinalizarPagamento();
     }//GEN-LAST:event_removerCartao1ActionPerformed
 
     private void removerCartaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removerCartaoActionPerformed
@@ -586,11 +613,32 @@ public class PagamentoDialog extends javax.swing.JDialog {
         
         this.pagamentosCartao.remove(linha);
         this.atualizarPagamentosCartao();
+        
+        //verificar se ja pode finalizar o pagamento
+        this.verificarSeJaPodeFinalizarPagamento();
     }//GEN-LAST:event_removerCartaoActionPerformed
 
     private void valorPagamentoFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_valorPagamentoFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_valorPagamentoFieldActionPerformed
+
+    private void finalizarPagamentoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_finalizarPagamentoButtonActionPerformed
+        //addcionar pagamento em dinheiro ai vetor de pagamentos casa haja entradas em dinheiro
+        if(this.recebidoDinheiro > 0 && this.recebidoCartao < this.totalNota){
+            Pagamento p = new Pagamento(this.recebidoDinheiro-this.troco, false);
+            this.pagamentosCartao.add(p);
+        }
+        
+        //resgatando data atual;
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        LocalDate localDate = LocalDate.now();
+        String data = dtf.format(localDate);
+        
+        //
+        BancoDeDados.cadastrarNovaNotaDeVenda(data, this.totalNota, framePai.getIdUsuarioLogado(), framePai.getIdUsuarioLoja(), pai.getProdutoComprados(), this.pagamentosCartao);
+        this.setVisible(false);
+        framePai.chamarVendas();
+    }//GEN-LAST:event_finalizarPagamentoButtonActionPerformed
 
     private void erro(int e){
         switch(e){
@@ -598,6 +646,15 @@ public class PagamentoDialog extends javax.swing.JDialog {
             case 2: JOptionPane.showMessageDialog(null, "Últimos 4 digitos inválidos!!"); break;
             case 3: JOptionPane.showMessageDialog(null, "Bandeira Inválida, utilize apenas letras!!"); break;
             case 4: JOptionPane.showMessageDialog(null, "Bandeira pode ter no máximo 20 caracteres!!"); break;
+        }
+    }
+    
+    private void verificarSeJaPodeFinalizarPagamento(){
+        if(totalRecebido >= totalNota){
+            finalizarPagamentoButton.setEnabled(true);
+        }
+        else{
+            finalizarPagamentoButton.setEnabled(false);
         }
     }
     
@@ -624,6 +681,7 @@ public class PagamentoDialog extends javax.swing.JDialog {
         dtm.setRowCount(0);
         String [] linha = new String[4];
         
+        float rCopyCartao = recebidoCartao;
         recebidoCartao = 0.0f;
         
         for(Pagamento p : this.pagamentosCartao){
@@ -633,6 +691,14 @@ public class PagamentoDialog extends javax.swing.JDialog {
             linha[3] = p.getBandeira();
             recebidoCartao += p.getValor();
             dtm.addRow(linha);
+        }
+        
+        if(recebidoCartao > totalNota){
+            JOptionPane.showMessageDialog(null, "Pagamentos utilizando apenas cartão não podem exceder o total da nota !!");
+            recebidoCartao = rCopyCartao;
+            this.pagamentosCartao.remove(this.pagamentosCartao.size()-1);
+            this.atualizarPagamentosCartao();
+            return;
         }
         
         this.totalRecebido = this.recebidoCartao+this.recebidoDinheiro;

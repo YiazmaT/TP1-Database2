@@ -10,6 +10,12 @@ import ClasseProdutos.ProdutoAtomico;
 import ClassesFuncionarios.UserLogado;
 import ClassesLojas.Fornecedor;
 import ClassesLojas.Loja;
+import InterfaceVendas.Pagamento;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -26,13 +32,37 @@ import javax.swing.JOptionPane;
  */
 public class BancoDeDados{
     private static final String BANCOusuario = "root";
-    private static final String BANCOsenha = "mayara";
+    private static final String BANCOsenha = "root";
     private static final String enderecoIP = "jdbc:mysql://127.0.0.1:3306/goldfork";
+    private static final String arqLogGeral = "LogGeral.txt";
+    private static final String arqLogInsert = "LogInsert.txt";
     
-    
+   
     /*
         *-----SELECTS-----*
     */
+    public static String recuperarNomeLoja(int idLanchonete){
+        String nome = null;
+        String send = "SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = "+idLanchonete;
+        BancoDeDados.logGeral(send);
+        
+        try {
+            Connection conn = DriverManager.getConnection(enderecoIP, BANCOusuario, BANCOsenha);
+            Statement stat = conn.createStatement();
+            ResultSet result = stat.executeQuery(send);
+            
+            result.next();
+            nome = result.getString("nome");
+            
+            stat.close();
+            conn.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Falha ao conectar com o Banco de Dados!!\n"+ex.getMessage());
+        }
+        
+        return nome;
+    }
+    
     public static ArrayList<Loja> recuperarNomeEIDLojas(int id_dono){ //recupera apenas o nome e o id de todas as lojas 
         ArrayList<Loja> lojas = new ArrayList<Loja>();
         String send = "SELECT id_lanchonete, nome FROM lanchonete WHERE lanchonete.cod_dono = "+id_dono;
@@ -140,6 +170,7 @@ public class BancoDeDados{
             if(!result.next()){
                 return false;
             }
+            
             stat.close();
             conn.close();
         } catch (SQLException ex) {
@@ -171,6 +202,37 @@ public class BancoDeDados{
         
         return p;
     }
+    
+    public static boolean possuiEstoqueParaVender(Produto p, int idLoja){
+        try {
+            Connection conn = DriverManager.getConnection(enderecoIP, BANCOusuario, BANCOsenha);
+            Statement stat = conn.createStatement();
+            Statement stat2 = conn.createStatement();
+            String send = "SELECT * FROM composicao_produto WHERE composicao_produto.cod_produto = "+p.getId_produto();
+            BancoDeDados.logGeral(send);
+            
+            ResultSet resultComposicaoProduto = stat.executeQuery(send);
+            ResultSet verif;
+            while(resultComposicaoProduto.next()){
+                send = "CALL verificaDisponibilidadeNoEstoque("+idLoja+", "+resultComposicaoProduto.getInt("cod_produto_atomico")+", "+(p.getQuantidade()*resultComposicaoProduto.getFloat("quantidade"))+")";
+                BancoDeDados.logGeral(send);
+                
+                verif = stat2.executeQuery(send);
+                verif.next();
+                if(verif.getBoolean("Msg") == false){
+                    return false; //estoque insuficiente
+                }
+            }
+            
+            stat.close();
+            conn.close();
+            return true;
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Falha ao conectar com o Banco de Dados!!\n"+ex.getMessage());
+        }
+        return false;
+    }
+    
     /*
         *-----INSERTS-----*
     */
@@ -403,7 +465,7 @@ public class BancoDeDados{
             Connection conn = DriverManager.getConnection(enderecoIP, BANCOusuario, BANCOsenha);
             Statement stat = conn.createStatement();
             
-            //cadastrar nova nota;
+            //cadastrar nova nota de compra;
             String send = "INSERT INTO nota_de_compra (data, valor_total, cod_fornecedor, cod_lanchonete) VALUES("
                     +"\""+data+"\""+", "
                     +valorTotalNota+", "
@@ -445,6 +507,89 @@ public class BancoDeDados{
             stat.close();
             conn.close();
             JOptionPane.showMessageDialog(null, "Nota de Compra cadastrada com sucesso!!");
+        } catch(SQLException ex){
+            JOptionPane.showMessageDialog(null, "Falha ao conectar com o Banco de Dados!!\n"+ex.getMessage());
+        }
+    }
+    
+    public static void cadastrarNovaNotaDeVenda(String data, float valor_total, int cod_caixa, int cod_lanchonete, ArrayList<Produto> produtos, ArrayList<Pagamento> pagamentos){
+        try{
+            Connection conn = DriverManager.getConnection(enderecoIP, BANCOusuario, BANCOsenha);
+            Statement stat = conn.createStatement();
+            Statement stat2 = conn.createStatement();
+            
+            //cadastrar nova nota de venda;
+            String send = "INSERT INTO nota_de_venda (data, valor_total, cod_caixa, cod_lanchonete) VALUES("
+                    +"\""+data+"\""+", "
+                    +valor_total+", "
+                    +cod_caixa+", "
+                    +cod_lanchonete+")";
+            BancoDeDados.logGeral(send);
+            BancoDeDados.logInsert(send);
+            stat.executeUpdate(send);
+            
+            //pegar id da mesma;
+            send = "SELECT id_nota_venda FROM nota_de_venda ORDER BY id_nota_venda DESC LIMIT 1";
+            BancoDeDados.logGeral(send);
+            ResultSet result2 = stat.executeQuery(send);
+            result2.next();
+            int idNotaDeVenda = result2.getInt("id_nota_venda");
+            
+            
+            //construir tabela de itens da nota de compra;
+            for(Produto atual : produtos){
+                send = "INSERT INTO itens_nota_venda (cod_nota_venda, cod_produto, quantidade, valor_unitario) VALUES("
+                        +idNotaDeVenda+", "
+                        +atual.getId_produto()+", "
+                        +atual.getQuantidade()+", "
+                        +atual.getValor()+")";
+                
+                BancoDeDados.logGeral(send);
+                BancoDeDados.logInsert(send);
+                stat.executeUpdate(send);
+                
+                
+                //atualizar estoque da loja;
+                send = "SELECT * FROM composicao_produto WHERE composicao_produto.cod_produto = "+atual.getId_produto();
+                BancoDeDados.logGeral(send);
+                ResultSet resultComposicaoProduto = stat.executeQuery(send);
+                while(resultComposicaoProduto.next()){
+                    send = "CALL atualizarEstoqueSaida("+cod_lanchonete+", "+resultComposicaoProduto.getInt("cod_produto_atomico")+", "+(atual.getQuantidade()*resultComposicaoProduto.getFloat("quantidade"))+")";
+                    BancoDeDados.logGeral(send);
+                    BancoDeDados.logInsert(send);
+                    stat2.executeUpdate(send);
+                }
+            }
+            
+            //construir tabela de pagamentos, sendo eles dinheiro ou cartão
+            for(Pagamento atual : pagamentos){
+                if(atual.isCartao()){
+                    send = "INSERT INTO pagamento_cartao (valor, cod_nota_venda, ultimos_digitos, bandeira, tipo) VALUES("
+                            +atual.getValor()+", "
+                            +idNotaDeVenda+", "
+                            +atual.getUltimos4Digitos()+", "
+                            +"\""+atual.getBandeira()+"\""+", "
+                            +"\""+atual.getTipo()+"\""+")";
+                    
+                    BancoDeDados.logGeral(send);
+                    BancoDeDados.logInsert(send);
+                    stat.executeUpdate(send);
+                }
+                else{
+                    send = "INSERT INTO pagamento_dinheiro (valor, cod_nota_venda) VALUES("
+                            +atual.getValor()+", "
+                            +idNotaDeVenda+")";
+                    
+                    BancoDeDados.logGeral(send);
+                    BancoDeDados.logInsert(send);
+                    stat.executeUpdate(send);
+                    
+                }
+            }
+            
+            stat.close();
+            conn.close();
+            JOptionPane.showMessageDialog(null, "Nota de Venda cadastrada com sucesso!!");
         } catch(SQLException ex){
             JOptionPane.showMessageDialog(null, "Falha ao conectar com o Banco de Dados!!\n"+ex.getMessage());
         }
@@ -659,9 +804,45 @@ public class BancoDeDados{
     */
     private static void logGeral(String send){
         System.out.println(send); //fazer arquivo txt de LOG;
+        
+        try {
+            File f = new File(arqLogGeral);
+            FileWriter fileWriter = new FileWriter(f, true);
+            BufferedWriter buffer = new BufferedWriter(fileWriter);
+            PrintWriter printWriter = new PrintWriter(buffer);
+            
+            if(f.exists() == false){
+                f.createNewFile();
+            }
+            //escreve no arquivo
+            printWriter.println(send);
+            
+            printWriter.close();
+            buffer.close();
+            fileWriter.close();
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Erro no Arquivo de Log Geral"+ex);
+        } 
     }
     
     private static void logInsert(String send){
-        //infiar no cu rsrsrsrsrsrs
+        try {
+            File f = new File(arqLogInsert);
+            FileWriter fileWriter = new FileWriter(f, true);
+            BufferedWriter buffer = new BufferedWriter(fileWriter);
+            PrintWriter printWriter = new PrintWriter(buffer);
+            
+            if(f.exists() == false){
+                f.createNewFile();
+            }
+            //escreve no arquivo
+            printWriter.println(send);
+            
+            printWriter.close();
+            buffer.close();
+            fileWriter.close();
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Erro no Arquivo de Log Inserts"+ex);
+        } 
     }
 }

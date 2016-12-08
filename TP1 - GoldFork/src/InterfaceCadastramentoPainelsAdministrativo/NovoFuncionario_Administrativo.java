@@ -329,7 +329,7 @@ public class NovoFuncionario_Administrativo extends javax.swing.JPanel {
         }
         
         BancoDeDados.cadastrarNovoFuncionario(tipoFunc, idLoja, nome, cpf, telefone, login, senha);
-        pai.chamarCadastrarFuncionarioAdministrativo();
+        pai.chamarCadastrarFuncionario_Administrativo();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void senhaFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_senhaFieldActionPerformed

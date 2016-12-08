@@ -30,6 +30,9 @@ public class Login extends javax.swing.JPanel {
         this.pai = pai;
         initComponents();
         senhaBox.setEchoChar('*');
+        
+        //loginBox.setText("joaquimmendes@gerente.goldfork.com");
+        //senhaBox.setText("joaquim35745600");
     }
     
     public void senhaIncorreta(){

@@ -77,6 +77,7 @@ public class NovoFornecedor_Administrativo extends javax.swing.JPanel {
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setText("Nome:");
 
+        nomeField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         nomeField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 nomeFieldActionPerformed(evt);
@@ -248,7 +249,7 @@ public class NovoFornecedor_Administrativo extends javax.swing.JPanel {
         if(BancoDeDados.verificaIfFornecedorComCNPJIgualUtilizandoIdDono(cnpj, pai.getIdUsuarioLogado()) == true){this.erro(7); return;}
         
         BancoDeDados.cadastrarNovoFornecedor(nome, telefone, cnpj, lojasAfetadas);
-        pai.chamarNovoFornecedorAdministrativo();
+        pai.chamarNovoFornecedor_Administrativo();
         
     }//GEN-LAST:event_jButton1ActionPerformed
 

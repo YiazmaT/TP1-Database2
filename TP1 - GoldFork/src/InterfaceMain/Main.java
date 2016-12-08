@@ -6,17 +6,18 @@
 package InterfaceMain;
 
 import InterfaceCadastramentoPainelsAdministrativo.NovaLanchonete_Administrativo;
-import InterfaceCadastramentoPainelsGerencial.NovaNotaCompra;
+import InterfaceCadastramentoPainelsGerencial.NovaNotaCompra_Gerencial;
 import InterfaceCadastramentoPainelsAdministrativo.NovaNotaCompra_Administrativo;
 import InterfaceCadastramentoPainelsAdministrativo.NovoFornecedor_Administrativo;
-import InterfaceCadastramentoPainelsGerencial.NovoFuncionario;
+import InterfaceCadastramentoPainelsGerencial.NovoFuncionario_Gerencial;
 import InterfaceCadastramentoPainelsAdministrativo.NovoFuncionario_Administrativo;
 import InterfaceCadastramentoPainelsAdministrativo.NovoProduto_Administrativo;
 import InterfaceCadastramentoPainelsAdministrativo.NovoProdutoAtomico_Administrativo;
 import InterfaceCommonPainels.Desenvolvedores;
 import InterfaceCommonPainels.Login;
 import InterfaceCommonPainels.MenuInicial;
-import InterfaceRelatoriosPainels.Relatorios;
+import InterfaceCadastramentoPainelsAdministrativo.Relatorios_Administrativos;
+import InterfaceCadastramentoPainelsGerencial.NovoFornecedor_Gerencial;
 import InterfaceVendas.Vendas;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -85,6 +86,7 @@ public class Main extends javax.swing.JFrame {
         gerencialMenu = new javax.swing.JMenu();
         novoFuncMenuGerencial = new javax.swing.JMenuItem();
         menuNotaCompra = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
         administrativoMenu = new javax.swing.JMenu();
         jMenuItem8 = new javax.swing.JMenuItem();
         jMenuItem11 = new javax.swing.JMenuItem();
@@ -193,6 +195,15 @@ public class Main extends javax.swing.JFrame {
             }
         });
         gerencialMenu.add(menuNotaCompra);
+
+        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/people-trading.png"))); // NOI18N
+        jMenuItem1.setText("Novo Fornecedor");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        gerencialMenu.add(jMenuItem1);
 
         jMenuBar2.add(gerencialMenu);
 
@@ -337,11 +348,11 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_loginmenuActionPerformed
 
     private void relatoriosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_relatoriosActionPerformed
-        this.chamarRelatorio();
+        this.chamarRelatorio_Administrativo();
     }//GEN-LAST:event_relatoriosActionPerformed
 
     private void novoFuncMenuGerencialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_novoFuncMenuGerencialActionPerformed
-        this.chamarNovoFuncionario();
+        this.chamarNovoFuncionario_Gerencial();
     }//GEN-LAST:event_novoFuncMenuGerencialActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
@@ -357,20 +368,24 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem8ActionPerformed
 
     private void menuNotaCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuNotaCompraActionPerformed
-        this.chamarNovaNotaCompra();
+        this.chamarNovaNotaCompra_Gerencial();
     }//GEN-LAST:event_menuNotaCompraActionPerformed
 
     private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
-        this.chamarNovoFornecedorAdministrativo();
+        this.chamarNovoFornecedor_Administrativo();
     }//GEN-LAST:event_jMenuItem10ActionPerformed
 
     private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
-        this.chamarCadastrarFuncionarioAdministrativo();
+        this.chamarCadastrarFuncionario_Administrativo();
     }//GEN-LAST:event_jMenuItem11ActionPerformed
 
     private void menuNotaCompraAdministrativoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuNotaCompraAdministrativoActionPerformed
-        this.chamarNovaNotaDeCompraAdministrativo();
+        this.chamarNovaNotaDeCompra_Administrativo();
     }//GEN-LAST:event_menuNotaCompraAdministrativoActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        this.chamarNovoFornecedor_Gerencial();
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -482,7 +497,7 @@ public class Main extends javax.swing.JFrame {
         }     
     }
     
-    //chamadores de janela comuns
+    //chamadores de janelas comuns
     public void chamarLogin(){
         principal.removeAll();
         principal.add(new Login(this));
@@ -501,35 +516,48 @@ public class Main extends javax.swing.JFrame {
         principal.revalidate();
         principal.repaint();
     }
+    
+    //chamadores de janelas menu Vendas
     public void chamarVendas(){
         principal.removeAll();
         principal.add(new Vendas(this));
         principal.revalidate();
         principal.repaint();
     }
-    public void chamarRelatorio(){
-        principal.removeAll();
-        principal.add(new Relatorios(this));
-        principal.revalidate();
-        principal.repaint();
-    }
     
-    //chamadores de janelas de cadastramento
-    public void chamarNovoFuncionario(){
+    //chamadores de janelas menu Gerencial
+    public void chamarNovoFuncionario_Gerencial(){
         principal.removeAll();
-        principal.add(new NovoFuncionario(this));
+        principal.add(new NovoFuncionario_Gerencial(this));
         principal.revalidate();
         principal.repaint();
     }
-
-    public void chamarNovaNotaCompra(){
+    public void chamarNovaNotaCompra_Gerencial(){
         principal.removeAll();
-        principal.add(new NovaNotaCompra(this));
+        principal.add(new NovaNotaCompra_Gerencial(this));
+        principal.revalidate();
+        principal.repaint();
+    }
+    public void chamarNovoFornecedor_Gerencial(){
+        principal.removeAll();
+        principal.add(new NovoFornecedor_Gerencial(this));
         principal.revalidate();
         principal.repaint();
     }
     
     //chamar janelas menu administrativo
+    public void chamarRelatorio_Administrativo(){
+        principal.removeAll();
+        principal.add(new Relatorios_Administrativos(this));
+        principal.revalidate();
+        principal.repaint();
+    }
+    public void chamarNovaNotaCompra_Administrativo(){
+        principal.removeAll();
+        principal.add(new NovaNotaCompra_Administrativo(this));
+        principal.revalidate();
+        principal.repaint();
+    }
     public void chamarNovoProduto_Administrativo(){
         principal.removeAll();
         principal.add(new NovoProduto_Administrativo(this));
@@ -548,19 +576,19 @@ public class Main extends javax.swing.JFrame {
         principal.revalidate();
         principal.repaint();
     }
-    public void chamarNovoFornecedorAdministrativo(){
+    public void chamarNovoFornecedor_Administrativo(){
         principal.removeAll();
         principal.add(new NovoFornecedor_Administrativo(this));
         principal.revalidate();
         principal.repaint();
     }
-    public void chamarCadastrarFuncionarioAdministrativo(){
+    public void chamarCadastrarFuncionario_Administrativo(){
         principal.removeAll();
         principal.add(new NovoFuncionario_Administrativo(this));
         principal.revalidate();
         principal.repaint();
     }
-    public void chamarNovaNotaDeCompraAdministrativo(){
+    public void chamarNovaNotaDeCompra_Administrativo(){
         principal.removeAll();
         principal.add(new NovaNotaCompra_Administrativo(this));
         principal.revalidate();
@@ -576,6 +604,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar2;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem2;
