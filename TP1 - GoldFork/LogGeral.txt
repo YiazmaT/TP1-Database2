@@ -1,0 +1,442 @@
+CALL validaLogin("eymar@dono.goldfork.com", "eymar", 1)
+CALL validaLogin("eymar@dono.goldfork.com", "eymar", 1)
+SELECT id_lanchonete, nome FROM lanchonete WHERE lanchonete.cod_dono = 1
+CALL validaLogin("eymar@dono.goldfork.com", "eymar", 1)
+SELECT id_lanchonete, nome FROM lanchonete WHERE lanchonete.cod_dono = 1
+CALL validaLogin("eymar@dono.goldfork.com", "eymar", 1)
+SELECT id_lanchonete, nome FROM lanchonete WHERE lanchonete.cod_dono = 1
+SELECT * FROM produto
+CALL validaLogin("eymar@dono.goldfork.com", "eymar", 1)
+SELECT id_lanchonete, nome FROM lanchonete WHERE lanchonete.cod_dono = 1
+SELECT nome FROM lanchonete WHERE lanchonete.nome = "SIUHIAUSHDUIAHSD" AND lanchonete.cod_dono = 1
+SELECT nome FROM lanchonete WHERE lanchonete.cnpj = "65.161.651/6516-51" AND lanchonete.cod_dono = 1
+INSERT INTO lanchonete(nome, telefone, cnpj, endereco_rua, endereco_numero, endereco_bairro, endereco_cidade, endereco_cep, endereco_estado, cod_dono) VALUES("SIUHIAUSHDUIAHSD","(51)6516-5161","65.161.651/6516-51","ausbduygsd",651,"ajbsdbs","ajsbdahbsd","16519-814","KL","1");
+SELECT id_lanchonete, nome FROM lanchonete WHERE lanchonete.cod_dono = 1
+SELECT id_lanchonete, nome FROM lanchonete WHERE lanchonete.cod_dono = 1
+CALL validaLogin("eymar@dono.goldfork.com", "eymar", 1)
+SELECT id_lanchonete, nome FROM lanchonete WHERE lanchonete.cod_dono = 1
+CALL validaLogin("eymar@dono.goldfork.com", "eymar", 1)
+SELECT id_lanchonete, nome FROM lanchonete WHERE lanchonete.cod_dono = 1
+CALL validaLogin("eymar@dono.goldfork.com", "eymar", 1)
+SELECT id_lanchonete, nome FROM lanchonete WHERE lanchonete.cod_dono = 1
+CALL validaLogin("eymar@dono.goldfork.com", "eymar", 1)
+SELECT id_lanchonete, nome FROM lanchonete WHERE lanchonete.cod_dono = 1
+CALL validaLogin("eymar@dono.goldfork.com", "eymar", 1)
+SELECT id_lanchonete, nome FROM lanchonete WHERE lanchonete.cod_dono = 1
+SELECT * FROM produto
+CALL validaLogin("eymar@dono.goldfork.com", "eymar", 1)
+SELECT id_lanchonete, nome FROM lanchonete WHERE lanchonete.cod_dono = 1
+CALL validaLogin("eymar@dono.goldfork.com", "eymar", 1)
+SELECT id_lanchonete, nome FROM lanchonete WHERE lanchonete.cod_dono = 1
+SELECT * FROM produto
+CALL validaLogin("eymar@dono.goldfork.com", "eymar", 1)
+SELECT id_lanchonete, nome FROM lanchonete WHERE lanchonete.cod_dono = 1
+CALL validaLogin("matheus@dono.goldfork.com", "matheus", 1)
+SELECT id_lanchonete, nome FROM lanchonete WHERE lanchonete.cod_dono = 2
+SELECT * FROM produto
+SELECT * FROM produto_atomico ORDER BY nome
+SELECT id_lanchonete, nome FROM lanchonete WHERE lanchonete.cod_dono = 2
+CALL validaLogin("eymar@dono.goldfork.com", "eymar", 1)
+SELECT id_lanchonete, nome FROM lanchonete WHERE lanchonete.cod_dono = 1
+SELECT * FROM produto
+CALL validaLogin("eymar@dono.goldfork.com", "eymar", 1)
+SELECT id_lanchonete, nome FROM lanchonete WHERE lanchonete.cod_dono = 1
+SELECT * FROM produto
+CALL validaLogin("eymar@dono.goldfork.com", "eymar", 1)
+SELECT id_lanchonete, nome FROM lanchonete WHERE lanchonete.cod_dono = 1
+SELECT * FROM produto
+SELECT id_produto_atomico, nome, unidade_medida, quantidade FROM produto_atomico INNER JOIN composicao_produto WHERE composicao_produto.cod_produto_atomico = produto_atomico.id_produto_atomico AND composicao_produto.cod_produto = 1
+SELECT id_produto_atomico, nome, unidade_medida, quantidade FROM produto_atomico INNER JOIN composicao_produto WHERE composicao_produto.cod_produto_atomico = produto_atomico.id_produto_atomico AND composicao_produto.cod_produto = 2
+SELECT id_produto_atomico, nome, unidade_medida, quantidade FROM produto_atomico INNER JOIN composicao_produto WHERE composicao_produto.cod_produto_atomico = produto_atomico.id_produto_atomico AND composicao_produto.cod_produto = 3
+SELECT id_produto_atomico, nome, unidade_medida, quantidade FROM produto_atomico INNER JOIN composicao_produto WHERE composicao_produto.cod_produto_atomico = produto_atomico.id_produto_atomico AND composicao_produto.cod_produto = 4
+SELECT id_produto_atomico, nome, unidade_medida, quantidade FROM produto_atomico INNER JOIN composicao_produto WHERE composicao_produto.cod_produto_atomico = produto_atomico.id_produto_atomico AND composicao_produto.cod_produto = 5
+SELECT id_produto_atomico, nome, unidade_medida, quantidade FROM produto_atomico INNER JOIN composicao_produto WHERE composicao_produto.cod_produto_atomico = produto_atomico.id_produto_atomico AND composicao_produto.cod_produto = 4
+SELECT id_produto_atomico, nome, unidade_medida, quantidade FROM produto_atomico INNER JOIN composicao_produto WHERE composicao_produto.cod_produto_atomico = produto_atomico.id_produto_atomico AND composicao_produto.cod_produto = 1
+SELECT id_produto_atomico, nome, unidade_medida, quantidade FROM produto_atomico INNER JOIN composicao_produto WHERE composicao_produto.cod_produto_atomico = produto_atomico.id_produto_atomico AND composicao_produto.cod_produto = 2
+SELECT id_produto_atomico, nome, unidade_medida, quantidade FROM produto_atomico INNER JOIN composicao_produto WHERE composicao_produto.cod_produto_atomico = produto_atomico.id_produto_atomico AND composicao_produto.cod_produto = 3
+CALL validaLogin("eymar@dono.goldfork.com", "eymar", 1)
+SELECT id_lanchonete, nome FROM lanchonete WHERE lanchonete.cod_dono = 1
+CALL validaLogin("eymar@dono.goldfork.com", "eymar", 1)
+SELECT id_lanchonete, nome FROM lanchonete WHERE lanchonete.cod_dono = 1
+CALL validaLogin("eymar@dono.goldfork.com", "eymar", 1)
+SELECT id_lanchonete, nome FROM lanchonete WHERE lanchonete.cod_dono = 1
+CALL validaLogin("eymar@dono.goldfork.com", "eymar", 1)
+SELECT id_lanchonete, nome FROM lanchonete WHERE lanchonete.cod_dono = 1
+CALL validaLogin("eymar@dono.goldfork.com", "eymar", 1)
+SELECT id_lanchonete, nome FROM lanchonete WHERE lanchonete.cod_dono = 1
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 1
+SELECT * FROM gerente WHERE gerente.cod_lanchonete = 1
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 2
+SELECT * FROM gerente WHERE gerente.cod_lanchonete = 2
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 3
+SELECT * FROM gerente WHERE gerente.cod_lanchonete = 3
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 4
+SELECT * FROM gerente WHERE gerente.cod_lanchonete = 4
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 1
+SELECT * FROM gerente WHERE gerente.cod_lanchonete = 1
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 2
+SELECT * FROM gerente WHERE gerente.cod_lanchonete = 2
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 1
+SELECT * FROM gerente WHERE gerente.cod_lanchonete = 1
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 2
+SELECT * FROM gerente WHERE gerente.cod_lanchonete = 2
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 3
+SELECT * FROM gerente WHERE gerente.cod_lanchonete = 3
+CALL validaLogin("eymar@dono.goldfork.com", "eymar", 1)
+SELECT id_lanchonete, nome FROM lanchonete WHERE lanchonete.cod_dono = 1
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 1
+SELECT * FROM gerente WHERE gerente.cod_lanchonete = 1
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 2
+SELECT * FROM gerente WHERE gerente.cod_lanchonete = 2
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 3
+SELECT * FROM gerente WHERE gerente.cod_lanchonete = 3
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 4
+SELECT * FROM gerente WHERE gerente.cod_lanchonete = 4
+CALL validaLogin("eymar@dono.goldfork.com", "eymar", 1)
+SELECT id_lanchonete, nome FROM lanchonete WHERE lanchonete.cod_dono = 1
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 1
+SELECT * FROM gerente WHERE gerente.cod_lanchonete = 1
+CALL validaLogin("eymar@dono.goldfork.com", "eymar", 1)
+SELECT id_lanchonete, nome FROM lanchonete WHERE lanchonete.cod_dono = 1
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 1
+SELECT * FROM gerente WHERE gerente.cod_lanchonete = 1
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 2
+SELECT * FROM gerente WHERE gerente.cod_lanchonete = 2
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 3
+SELECT * FROM gerente WHERE gerente.cod_lanchonete = 3
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 4
+SELECT * FROM gerente WHERE gerente.cod_lanchonete = 4
+CALL validaLogin("eymar@dono.goldfork.com", "eymar", 1)
+SELECT id_lanchonete, nome FROM lanchonete WHERE lanchonete.cod_dono = 1
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 1
+SELECT * FROM gerente WHERE gerente.cod_lanchonete = 1
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 2
+SELECT * FROM gerente WHERE gerente.cod_lanchonete = 2
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 3
+SELECT * FROM gerente WHERE gerente.cod_lanchonete = 3
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 4
+SELECT * FROM gerente WHERE gerente.cod_lanchonete = 4
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 1
+SELECT * FROM gerente WHERE gerente.cod_lanchonete = 1
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 2
+SELECT * FROM gerente WHERE gerente.cod_lanchonete = 2
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 3
+SELECT * FROM gerente WHERE gerente.cod_lanchonete = 3
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 4
+SELECT * FROM gerente WHERE gerente.cod_lanchonete = 4
+CALL validaLogin("eymar@dono.goldfork.com", "eymar", 1)
+SELECT id_lanchonete, nome FROM lanchonete WHERE lanchonete.cod_dono = 1
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 1
+SELECT * FROM gerente WHERE gerente.cod_lanchonete = 1
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 2
+SELECT * FROM gerente WHERE gerente.cod_lanchonete = 2
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 3
+SELECT * FROM gerente WHERE gerente.cod_lanchonete = 3
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 4
+SELECT * FROM gerente WHERE gerente.cod_lanchonete = 4
+CALL validaLogin("eymar@dono.goldfork.com", "eymar", 1)
+SELECT id_lanchonete, nome FROM lanchonete WHERE lanchonete.cod_dono = 1
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 1
+SELECT * FROM caixa WHERE caixa.cod_lanchonete = 1
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 2
+SELECT * FROM caixa WHERE caixa.cod_lanchonete = 2
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 3
+SELECT * FROM caixa WHERE caixa.cod_lanchonete = 3
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 4
+SELECT * FROM caixa WHERE caixa.cod_lanchonete = 4
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 1
+SELECT * FROM caixa WHERE caixa.cod_lanchonete = 1
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 1
+SELECT * FROM faxineiro WHERE faxineiro.cod_lanchonete = 1
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 2
+SELECT * FROM faxineiro WHERE faxineiro.cod_lanchonete = 2
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 3
+SELECT * FROM faxineiro WHERE faxineiro.cod_lanchonete = 3
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 4
+SELECT * FROM faxineiro WHERE faxineiro.cod_lanchonete = 4
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 1
+SELECT * FROM cozinheiro WHERE cozinheiro.cod_lanchonete = 1
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 2
+SELECT * FROM cozinheiro WHERE cozinheiro.cod_lanchonete = 2
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 3
+SELECT * FROM cozinheiro WHERE cozinheiro.cod_lanchonete = 3
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 4
+SELECT * FROM cozinheiro WHERE cozinheiro.cod_lanchonete = 4
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 1
+SELECT * FROM cozinheiro WHERE cozinheiro.cod_lanchonete = 1
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 2
+SELECT * FROM cozinheiro WHERE cozinheiro.cod_lanchonete = 2
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 3
+SELECT * FROM cozinheiro WHERE cozinheiro.cod_lanchonete = 3
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 4
+SELECT * FROM cozinheiro WHERE cozinheiro.cod_lanchonete = 4
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 1
+SELECT * FROM gerente WHERE gerente.cod_lanchonete = 1
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 2
+SELECT * FROM gerente WHERE gerente.cod_lanchonete = 2
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 3
+SELECT * FROM gerente WHERE gerente.cod_lanchonete = 3
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 4
+SELECT * FROM gerente WHERE gerente.cod_lanchonete = 4
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 1
+SELECT * FROM caixa WHERE caixa.cod_lanchonete = 1
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 2
+SELECT * FROM caixa WHERE caixa.cod_lanchonete = 2
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 3
+SELECT * FROM caixa WHERE caixa.cod_lanchonete = 3
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 4
+SELECT * FROM caixa WHERE caixa.cod_lanchonete = 4
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 1
+SELECT * FROM faxineiro WHERE faxineiro.cod_lanchonete = 1
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 2
+SELECT * FROM faxineiro WHERE faxineiro.cod_lanchonete = 2
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 3
+SELECT * FROM faxineiro WHERE faxineiro.cod_lanchonete = 3
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 4
+SELECT * FROM faxineiro WHERE faxineiro.cod_lanchonete = 4
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 1
+SELECT * FROM cozinheiro WHERE cozinheiro.cod_lanchonete = 1
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 2
+SELECT * FROM cozinheiro WHERE cozinheiro.cod_lanchonete = 2
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 3
+SELECT * FROM cozinheiro WHERE cozinheiro.cod_lanchonete = 3
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 4
+SELECT * FROM cozinheiro WHERE cozinheiro.cod_lanchonete = 4
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 1
+SELECT * FROM gerente WHERE gerente.cod_lanchonete = 1
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 1
+SELECT * FROM caixa WHERE caixa.cod_lanchonete = 1
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 1
+SELECT * FROM faxineiro WHERE faxineiro.cod_lanchonete = 1
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 1
+SELECT * FROM cozinheiro WHERE cozinheiro.cod_lanchonete = 1
+CALL validaLogin("eymar@dono.goldfork.com", "eymar", 1)
+SELECT id_lanchonete, nome FROM lanchonete WHERE lanchonete.cod_dono = 1
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 1
+SELECT * FROM gerente WHERE gerente.cod_lanchonete = 1
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 2
+SELECT * FROM gerente WHERE gerente.cod_lanchonete = 2
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 3
+SELECT * FROM gerente WHERE gerente.cod_lanchonete = 3
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 4
+SELECT * FROM gerente WHERE gerente.cod_lanchonete = 4
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 1
+SELECT * FROM caixa WHERE caixa.cod_lanchonete = 1
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 2
+SELECT * FROM caixa WHERE caixa.cod_lanchonete = 2
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 3
+SELECT * FROM caixa WHERE caixa.cod_lanchonete = 3
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 4
+SELECT * FROM caixa WHERE caixa.cod_lanchonete = 4
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 1
+SELECT * FROM faxineiro WHERE faxineiro.cod_lanchonete = 1
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 2
+SELECT * FROM faxineiro WHERE faxineiro.cod_lanchonete = 2
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 3
+SELECT * FROM faxineiro WHERE faxineiro.cod_lanchonete = 3
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 4
+SELECT * FROM faxineiro WHERE faxineiro.cod_lanchonete = 4
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 1
+SELECT * FROM cozinheiro WHERE cozinheiro.cod_lanchonete = 1
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 2
+SELECT * FROM cozinheiro WHERE cozinheiro.cod_lanchonete = 2
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 3
+SELECT * FROM cozinheiro WHERE cozinheiro.cod_lanchonete = 3
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 4
+SELECT * FROM cozinheiro WHERE cozinheiro.cod_lanchonete = 4
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 1
+SELECT * FROM gerente WHERE gerente.cod_lanchonete = 1
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 2
+SELECT * FROM gerente WHERE gerente.cod_lanchonete = 2
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 3
+SELECT * FROM gerente WHERE gerente.cod_lanchonete = 3
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 4
+SELECT * FROM gerente WHERE gerente.cod_lanchonete = 4
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 1
+SELECT * FROM caixa WHERE caixa.cod_lanchonete = 1
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 2
+SELECT * FROM caixa WHERE caixa.cod_lanchonete = 2
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 3
+SELECT * FROM caixa WHERE caixa.cod_lanchonete = 3
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 4
+SELECT * FROM caixa WHERE caixa.cod_lanchonete = 4
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 1
+SELECT * FROM faxineiro WHERE faxineiro.cod_lanchonete = 1
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 2
+SELECT * FROM faxineiro WHERE faxineiro.cod_lanchonete = 2
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 3
+SELECT * FROM faxineiro WHERE faxineiro.cod_lanchonete = 3
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 4
+SELECT * FROM faxineiro WHERE faxineiro.cod_lanchonete = 4
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 1
+SELECT * FROM cozinheiro WHERE cozinheiro.cod_lanchonete = 1
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 2
+SELECT * FROM cozinheiro WHERE cozinheiro.cod_lanchonete = 2
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 3
+SELECT * FROM cozinheiro WHERE cozinheiro.cod_lanchonete = 3
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 4
+SELECT * FROM cozinheiro WHERE cozinheiro.cod_lanchonete = 4
+CALL validaLogin("eymar@dono.goldfork.com", "eymar", 1)
+SELECT id_lanchonete, nome FROM lanchonete WHERE lanchonete.cod_dono = 1
+CALL validaLogin("eymar@dono.goldfork.com", "eymar", 1)
+SELECT id_lanchonete, nome FROM lanchonete WHERE lanchonete.cod_dono = 1
+CALL validaLogin("eymar@dono.goldfork.com", "eymar", 1)
+SELECT id_lanchonete, nome FROM lanchonete WHERE lanchonete.cod_dono = 1
+SELECT id_fornecedor, nome FROM (select * from fornecimento where fornecimento.cod_lanchonete = 1) AS test INNER JOIN fornecedor ON test.cod_fornecedor = fornecedor.id_fornecedor
+SELECT * FROM produto_atomico ORDER BY nome
+SELECT id_lanchonete, nome FROM lanchonete WHERE lanchonete.cod_dono = 1
+SELECT * FROM produto
+CALL validaLogin("eymar@dono.goldfork.com", "eymar", 1)
+SELECT id_lanchonete, nome FROM lanchonete WHERE lanchonete.cod_dono = 1
+CALL validaLogin("eymar@dono.goldfork.com", "eymar", 1)
+SELECT id_lanchonete, nome FROM lanchonete WHERE lanchonete.cod_dono = 1
+SELECT * FROM produto_atomico ORDER BY nome
+CALL validaLogin("eymar@dono.goldfork.com", "eymar", 1)
+SELECT id_lanchonete, nome FROM lanchonete WHERE lanchonete.cod_dono = 1
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 1
+SELECT * FROM gerente WHERE gerente.cod_lanchonete = 1
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 2
+SELECT * FROM gerente WHERE gerente.cod_lanchonete = 2
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 3
+SELECT * FROM gerente WHERE gerente.cod_lanchonete = 3
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 4
+SELECT * FROM gerente WHERE gerente.cod_lanchonete = 4
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 1
+SELECT * FROM caixa WHERE caixa.cod_lanchonete = 1
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 2
+SELECT * FROM caixa WHERE caixa.cod_lanchonete = 2
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 3
+SELECT * FROM caixa WHERE caixa.cod_lanchonete = 3
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 4
+SELECT * FROM caixa WHERE caixa.cod_lanchonete = 4
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 1
+SELECT * FROM faxineiro WHERE faxineiro.cod_lanchonete = 1
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 2
+SELECT * FROM faxineiro WHERE faxineiro.cod_lanchonete = 2
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 3
+SELECT * FROM faxineiro WHERE faxineiro.cod_lanchonete = 3
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 4
+SELECT * FROM faxineiro WHERE faxineiro.cod_lanchonete = 4
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 1
+SELECT * FROM cozinheiro WHERE cozinheiro.cod_lanchonete = 1
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 2
+SELECT * FROM cozinheiro WHERE cozinheiro.cod_lanchonete = 2
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 3
+SELECT * FROM cozinheiro WHERE cozinheiro.cod_lanchonete = 3
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 4
+SELECT * FROM cozinheiro WHERE cozinheiro.cod_lanchonete = 4
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 1
+SELECT * FROM gerente WHERE gerente.cod_lanchonete = 1
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 2
+SELECT * FROM gerente WHERE gerente.cod_lanchonete = 2
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 3
+SELECT * FROM gerente WHERE gerente.cod_lanchonete = 3
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 4
+SELECT * FROM gerente WHERE gerente.cod_lanchonete = 4
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 1
+SELECT * FROM caixa WHERE caixa.cod_lanchonete = 1
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 2
+SELECT * FROM caixa WHERE caixa.cod_lanchonete = 2
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 3
+SELECT * FROM caixa WHERE caixa.cod_lanchonete = 3
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 4
+SELECT * FROM caixa WHERE caixa.cod_lanchonete = 4
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 1
+SELECT * FROM faxineiro WHERE faxineiro.cod_lanchonete = 1
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 2
+SELECT * FROM faxineiro WHERE faxineiro.cod_lanchonete = 2
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 3
+SELECT * FROM faxineiro WHERE faxineiro.cod_lanchonete = 3
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 4
+SELECT * FROM faxineiro WHERE faxineiro.cod_lanchonete = 4
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 1
+SELECT * FROM cozinheiro WHERE cozinheiro.cod_lanchonete = 1
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 2
+SELECT * FROM cozinheiro WHERE cozinheiro.cod_lanchonete = 2
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 3
+SELECT * FROM cozinheiro WHERE cozinheiro.cod_lanchonete = 3
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 4
+SELECT * FROM cozinheiro WHERE cozinheiro.cod_lanchonete = 4
+SELECT * FROM produto_atomico ORDER BY nome
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 1
+SELECT * FROM gerente WHERE gerente.cod_lanchonete = 1
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 2
+SELECT * FROM gerente WHERE gerente.cod_lanchonete = 2
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 3
+SELECT * FROM gerente WHERE gerente.cod_lanchonete = 3
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 4
+SELECT * FROM gerente WHERE gerente.cod_lanchonete = 4
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 1
+SELECT * FROM caixa WHERE caixa.cod_lanchonete = 1
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 2
+SELECT * FROM caixa WHERE caixa.cod_lanchonete = 2
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 3
+SELECT * FROM caixa WHERE caixa.cod_lanchonete = 3
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 4
+SELECT * FROM caixa WHERE caixa.cod_lanchonete = 4
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 1
+SELECT * FROM faxineiro WHERE faxineiro.cod_lanchonete = 1
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 2
+SELECT * FROM faxineiro WHERE faxineiro.cod_lanchonete = 2
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 3
+SELECT * FROM faxineiro WHERE faxineiro.cod_lanchonete = 3
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 4
+SELECT * FROM faxineiro WHERE faxineiro.cod_lanchonete = 4
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 1
+SELECT * FROM cozinheiro WHERE cozinheiro.cod_lanchonete = 1
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 2
+SELECT * FROM cozinheiro WHERE cozinheiro.cod_lanchonete = 2
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 3
+SELECT * FROM cozinheiro WHERE cozinheiro.cod_lanchonete = 3
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 4
+SELECT * FROM cozinheiro WHERE cozinheiro.cod_lanchonete = 4
+SELECT * FROM produto_atomico ORDER BY nome
+CALL validaLogin("eymar@dono.goldfork.com", "eymar", 1)
+SELECT id_lanchonete, nome FROM lanchonete WHERE lanchonete.cod_dono = 1
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 1
+SELECT * FROM gerente WHERE gerente.cod_lanchonete = 1
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 2
+SELECT * FROM gerente WHERE gerente.cod_lanchonete = 2
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 3
+SELECT * FROM gerente WHERE gerente.cod_lanchonete = 3
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 4
+SELECT * FROM gerente WHERE gerente.cod_lanchonete = 4
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 1
+SELECT * FROM caixa WHERE caixa.cod_lanchonete = 1
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 2
+SELECT * FROM caixa WHERE caixa.cod_lanchonete = 2
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 3
+SELECT * FROM caixa WHERE caixa.cod_lanchonete = 3
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 4
+SELECT * FROM caixa WHERE caixa.cod_lanchonete = 4
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 1
+SELECT * FROM faxineiro WHERE faxineiro.cod_lanchonete = 1
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 2
+SELECT * FROM faxineiro WHERE faxineiro.cod_lanchonete = 2
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 3
+SELECT * FROM faxineiro WHERE faxineiro.cod_lanchonete = 3
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 4
+SELECT * FROM faxineiro WHERE faxineiro.cod_lanchonete = 4
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 1
+SELECT * FROM cozinheiro WHERE cozinheiro.cod_lanchonete = 1
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 2
+SELECT * FROM cozinheiro WHERE cozinheiro.cod_lanchonete = 2
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 3
+SELECT * FROM cozinheiro WHERE cozinheiro.cod_lanchonete = 3
+SELECT nome FROM lanchonete WHERE lanchonete.id_lanchonete = 4
+SELECT * FROM cozinheiro WHERE cozinheiro.cod_lanchonete = 4
+CALL validaLogin("eymar@dono.goldfork.com", "eymar", 1)
+SELECT id_lanchonete, nome FROM lanchonete WHERE lanchonete.cod_dono = 1
+CALL validaLogin("eymar@dono.goldfork.com", "eymar", 1)
+SELECT id_lanchonete, nome FROM lanchonete WHERE lanchonete.cod_dono = 1
+CALL validaLogin("eymar@dono.goldfork.com", "eymar", 1)
+SELECT id_lanchonete, nome FROM lanchonete WHERE lanchonete.cod_dono = 1
+CALL validaLogin("eymar@dono.goldfork.com", "eymar", 1)
+SELECT id_lanchonete, nome FROM lanchonete WHERE lanchonete.cod_dono = 1
+SELECT * FROM produto
+SELECT * FROM lanchonete
+CALL validaLogin("eymar@dono.goldfork.com", "eymar", 1)
+SELECT id_lanchonete, nome FROM lanchonete WHERE lanchonete.cod_dono = 1
+SELECT * FROM lanchonete
+SELECT id_lanchonete, nome FROM lanchonete WHERE lanchonete.cod_dono = 1
+SELECT * FROM produto_atomico ORDER BY nome

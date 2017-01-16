@@ -31,8 +31,8 @@ public class Login extends javax.swing.JPanel {
         initComponents();
         senhaBox.setEchoChar('*');
         
-        //loginBox.setText("joaquimmendes@gerente.goldfork.com");
-        //senhaBox.setText("joaquim35745600");
+        loginBox.setText("eymar@dono.goldfork.com");
+        senhaBox.setText("eymar");
     }
     
     public void senhaIncorreta(){
@@ -76,6 +76,12 @@ public class Login extends javax.swing.JPanel {
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("Senha:");
+
+        loginBox.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                loginBoxKeyReleased(evt);
+            }
+        });
 
         loginButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         loginButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/login.png"))); // NOI18N
@@ -233,6 +239,12 @@ public class Login extends javax.swing.JPanel {
             loginButtonActionPerformed(null);
         }
     }//GEN-LAST:event_senhaBoxKeyReleased
+
+    private void loginBoxKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_loginBoxKeyReleased
+        if(evt.getKeyChar() == '\n'){
+            loginButtonActionPerformed(null);
+        }
+    }//GEN-LAST:event_loginBoxKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

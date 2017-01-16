@@ -14,6 +14,14 @@ public class ProdutoAtomico {
         this.quantidade = 0.0f;
         this.valorUnitario = 0.0f;
     }
+
+    public ProdutoAtomico(int idProdutoAtomico, String unidade, String nome, float quantidade) {
+        this.idProdutoAtomico = idProdutoAtomico;
+        this.unidade = unidade;
+        this.nome = nome;
+        this.quantidade = quantidade;
+    }
+    
     
     public float getValorUnitario() {
         return valorUnitario;

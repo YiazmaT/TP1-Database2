@@ -20,7 +20,7 @@ import javax.swing.JOptionPane;
 public class NovoFornecedor_Administrativo extends javax.swing.JPanel {
     private Main pai;
     private ArrayList<Loja> todasLojas;
-    private ArrayList<PanelAuxiliarCadastrarFornecedor> lojasPanel;
+    private ArrayList<PanelLojaAuxiliarParaListagem> lojasPanel;
     /**
      * Creates new form NovoFornecedor
      */
@@ -28,13 +28,13 @@ public class NovoFornecedor_Administrativo extends javax.swing.JPanel {
         initComponents();
         this.pai=pai;
         
-        lojasPanel = new ArrayList<PanelAuxiliarCadastrarFornecedor>();
+        lojasPanel = new ArrayList<PanelLojaAuxiliarParaListagem>();
         
         this.todasLojas = BancoDeDados.recuperarNomeEIDLojas(pai.getIdUsuarioLogado());
         lojasDentroPanel.setLayout(new GridLayout(0,1));
         
         for (Loja loja : todasLojas) {
-            PanelAuxiliarCadastrarFornecedor p = new PanelAuxiliarCadastrarFornecedor(this, loja);
+            PanelLojaAuxiliarParaListagem p = new PanelLojaAuxiliarParaListagem(loja);
             lojasDentroPanel.add(p);
             lojasPanel.add(p);
         }
@@ -144,9 +144,8 @@ public class NovoFornecedor_Administrativo extends javax.swing.JPanel {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel4)
-                                    .addComponent(todasAsLojas, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jLabel4)
+                                .addGap(313, 313, 313))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -167,6 +166,10 @@ public class NovoFornecedor_Administrativo extends javax.swing.JPanel {
                 .addGap(150, 150, 150)
                 .addComponent(jButton1)
                 .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(todasAsLojas, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabel3, jLabel5, jLabel6});
@@ -224,7 +227,7 @@ public class NovoFornecedor_Administrativo extends javax.swing.JPanel {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         //pegar lojas afetadas
         ArrayList<Loja> lojasAfetadas = new ArrayList<Loja>();
-        for(PanelAuxiliarCadastrarFornecedor atual : this.lojasPanel){
+        for(PanelLojaAuxiliarParaListagem atual : this.lojasPanel){
             if(atual.isBotaoSelecionado()){
                 lojasAfetadas.add(atual.getLoja());
             }

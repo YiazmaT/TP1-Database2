@@ -4,14 +4,15 @@ public class Loja {
     private int id_lanchonete;
     private String telefone;
     private String nome;
+    private String cnpj;
     private String endereco_cidade;
     private String endereco_bairro;
     private String endereco_estado;
     private String endereco_rua;
     private String endereco_cep;
-    private String endereco_numero;
+    private int endereco_numero;
 
-    public Loja(int id_lanchonete, String telefone, String nome, String endereco_cidade, String endereco_bairro, String endereco_estado, String endereco_rua, String endereco_cep, String endereco_numero) {
+    public Loja(int id_lanchonete, String telefone, String nome, String endereco_cidade, String endereco_bairro, String endereco_estado, String endereco_rua, String endereco_cep, int endereco_numero, String cnpj) {
         this.id_lanchonete = id_lanchonete;
         this.nome = nome;
         this.telefone = telefone;
@@ -21,6 +22,15 @@ public class Loja {
         this.endereco_rua = endereco_rua;
         this.endereco_cep = endereco_cep;
         this.endereco_numero = endereco_numero;
+        this.cnpj = cnpj;
+    }
+
+    public String getCnpj() {
+        return cnpj;
+    }
+
+    public void setCnpj(String cnpj) {
+        this.cnpj = cnpj;
     }
     
     public Loja(int id_lanchonete, String nome) {
@@ -39,7 +49,7 @@ public class Loja {
     public String getNome() {
         return nome;
     }
-
+    
     public String getEndereco_cidade() {
         return endereco_cidade;
     }
@@ -60,7 +70,7 @@ public class Loja {
         return endereco_cep;
     }
 
-    public String getEndereco_numero() {
+    public int getEndereco_numero() {
         return endereco_numero;
     }
 
@@ -96,7 +106,7 @@ public class Loja {
         this.endereco_cep = endereco_cep;
     }
 
-    public void setEndereco_numero(String endereco_numero) {
+    public void setEndereco_numero(int endereco_numero) {
         this.endereco_numero = endereco_numero;
     }
     

@@ -11,16 +11,14 @@ import ClassesLojas.Loja;
  *
  * @author YiazmaT
  */
-public class PanelAuxiliarCadastrarFornecedor extends javax.swing.JPanel {
+public class PanelLojaAuxiliarParaListagem extends javax.swing.JPanel {
     private Loja loja;
-    private NovoFornecedor_Administrativo pai;
     /**
      * Creates new form PanelAuxiliarCadastrarFornecedor
      */
-    public PanelAuxiliarCadastrarFornecedor(NovoFornecedor_Administrativo pai, Loja loja) {
+    public PanelLojaAuxiliarParaListagem(Loja loja) {
         initComponents();
         this.loja = loja;
-        this.pai = pai;
         
         nomeLoja.setText(this.loja.getNome());
     }
@@ -29,11 +27,18 @@ public class PanelAuxiliarCadastrarFornecedor extends javax.swing.JPanel {
         return this.loja;
     }
     
+    public void travarselect(boolean opcao){
+        selecionaLoja.setEnabled(opcao);
+    }
+    
     public boolean isBotaoSelecionado(){
         if(selecionaLoja.isSelected() == true) return true;
         else return false;
     }
     
+    public void selecionar(boolean b){
+        this.selecionaLoja.setSelected(b);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
