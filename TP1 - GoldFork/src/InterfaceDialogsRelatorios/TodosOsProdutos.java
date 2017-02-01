@@ -8,6 +8,8 @@ package InterfaceDialogsRelatorios;
 import BancoDeDados.BancoDeDados;
 import ClasseProdutos.Produto;
 import ClasseProdutos.ProdutoAtomico;
+import InterfaceDialogsAlteracaoDeDados.ModificarProduto;
+import InterfaceMain.Main;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 
@@ -16,24 +18,17 @@ import javax.swing.table.DefaultTableModel;
  * @author Eymar Lima
  */
 public class TodosOsProdutos extends javax.swing.JDialog {
-    ArrayList<Produto> todosProdutos = new ArrayList<Produto>();
+    private ArrayList<Produto> todosProdutos = new ArrayList<Produto>();
+    private Main pai;
     /**
      * Creates new form TodosOsProdutos
      */
-    public TodosOsProdutos(java.awt.Frame parent, boolean modal) {
+    public TodosOsProdutos(java.awt.Frame parent, boolean modal, Main pai) {
         super(parent, modal);
         initComponents();
+        this.pai = pai;
         
-        DefaultTableModel dtm = (DefaultTableModel) tableProduto.getModel();
-        dtm.setRowCount(0);
-        
-        todosProdutos = BancoDeDados.recuperarTodosOsProdutos();
-        String [] linha = new String[2];
-        for(Produto atual : todosProdutos){
-            linha[0] = atual.getNome();
-            linha[1] = String.valueOf(atual.getValor());
-            dtm.addRow(linha);
-        }
+        this.listarProdutos();
     }
     
     /**
@@ -55,6 +50,8 @@ public class TodosOsProdutos extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
         composicaoTable = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -135,6 +132,18 @@ public class TodosOsProdutos extends javax.swing.JDialog {
         });
         jScrollPane4.setViewportView(composicaoTable);
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel2.setText("Produtos Cadastrados:");
+
+        jButton2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/shuffle (1).png"))); // NOI18N
+        jButton2.setText("Modificar Dados Cadastrados");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -143,25 +152,32 @@ public class TodosOsProdutos extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 735, Short.MAX_VALUE)
+                    .addComponent(jScrollPane4)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane4))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton2)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
-                    .addComponent(jLabel1))
+                    .addComponent(jLabel1)
+                    .addComponent(jButton2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 237, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 234, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -187,11 +203,37 @@ public class TodosOsProdutos extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        int linha = tableProduto.getSelectedRow();
+        if(linha == -1) return;
+        
+        ModificarProduto m = new ModificarProduto(this.pai, true, this.todosProdutos.get(linha));
+        m.setLocationRelativeTo(this.pai);
+        m.setVisible(true);
+        
+        DefaultTableModel dtm = (DefaultTableModel) composicaoTable.getModel();
+        dtm.setRowCount(0);
+        this.listarProdutos();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
+    public void listarProdutos(){
+        DefaultTableModel dtm = (DefaultTableModel) tableProduto.getModel();
+        dtm.setRowCount(0);
+        
+        todosProdutos = BancoDeDados.recuperarTodosOsProdutos();
+        String [] linha = new String[2];
+        for(Produto atual : todosProdutos){
+            linha[0] = atual.getNome();
+            linha[1] = String.valueOf(atual.getValor());
+            dtm.addRow(linha);
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable composicaoTable;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;

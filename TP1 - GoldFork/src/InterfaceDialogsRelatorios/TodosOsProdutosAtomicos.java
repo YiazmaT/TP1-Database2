@@ -7,6 +7,8 @@ package InterfaceDialogsRelatorios;
 
 import BancoDeDados.BancoDeDados;
 import ClasseProdutos.ProdutoAtomico;
+import InterfaceDialogsAlteracaoDeDados.ModificarProdutoAtomico;
+import InterfaceMain.Main;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 
@@ -15,23 +17,16 @@ import javax.swing.table.DefaultTableModel;
  * @author Eymar Lima
  */
 public class TodosOsProdutosAtomicos extends javax.swing.JDialog {
-
+    private ArrayList<ProdutoAtomico> todosOsProdutos;
+    private Main pai;
     /**
      * Creates new form TodosOsProdutosAtomicos
      */
-    public TodosOsProdutosAtomicos(java.awt.Frame parent, boolean modal) {
+    public TodosOsProdutosAtomicos(java.awt.Frame parent, boolean modal, Main pai) {
         super(parent, modal);
         initComponents();
-        ArrayList<ProdutoAtomico> p = BancoDeDados.recuperarProdutosAtomicos();
-        DefaultTableModel dtm = (DefaultTableModel) produtoAtomicoTable.getModel();
-        String [] linha = new String[2];
-        
-        dtm.setRowCount(0);
-        for(ProdutoAtomico atual : p){
-            linha[0] = atual.getNome();
-            linha[1] = atual.getUnidade();
-            dtm.addRow(linha);
-        }
+        this.pai = pai;
+        this.preencherTabela();
     }
 
     /**
@@ -45,6 +40,8 @@ public class TodosOsProdutosAtomicos extends javax.swing.JDialog {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         produtoAtomicoTable = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Todos os Produtos Atômicos");
@@ -68,28 +65,75 @@ public class TodosOsProdutosAtomicos extends javax.swing.JDialog {
         });
         jScrollPane1.setViewportView(produtoAtomicoTable);
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel1.setText("Produtos Atômicos Cadastrados:");
+
+        jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/shuffle (1).png"))); // NOI18N
+        jButton1.setText("Alterar Dados Cadastrados");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 735, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 735, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 385, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(4, 4, 4)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        int linha = produtoAtomicoTable.getSelectedRow();
+        if(linha == -1) return;
+        
+        ModificarProdutoAtomico m = new ModificarProdutoAtomico(this.pai, true, todosOsProdutos.get(linha));
+        m.setLocationRelativeTo(this.pai);
+        m.setVisible(true);
+        
+        this.preencherTabela();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void preencherTabela(){
+        todosOsProdutos = BancoDeDados.recuperarProdutosAtomicos();
+        DefaultTableModel dtm = (DefaultTableModel) produtoAtomicoTable.getModel();
+        String [] linha = new String[2];
+        
+        dtm.setRowCount(0);
+        for(ProdutoAtomico atual : todosOsProdutos){
+            linha[0] = atual.getNome();
+            linha[1] = atual.getUnidade();
+            dtm.addRow(linha);
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable produtoAtomicoTable;
     // End of variables declaration//GEN-END:variables

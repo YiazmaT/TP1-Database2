@@ -273,6 +273,7 @@ public class NovoProduto_Administrativo extends javax.swing.JPanel {
         //pegar e validar valor;
         if(valorField.getText().equals("")) {this.erro(3); return;}
         float valor = Float.parseFloat(valorField.getText().replaceAll("\\,", "\\."));
+        if(valor <= 0) {this.erro(7); return;}
         
         if(this.composicao.isEmpty()){
             this.erro(5);
@@ -290,8 +291,15 @@ public class NovoProduto_Administrativo extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Por favor Insira uma quantidade!!");
             return;
         }
+        if(this.verificaSeJaEstaNaComposicao(this.atomicosCadastrados.get(linha).getIdProdutoAtomico())){
+            JOptionPane.showMessageDialog(null, "Este produto atômico ja está presente na composição!!");
+            return;
+        }
         float quantidade = Float.parseFloat(quantidadeField.getText().replaceAll("\\,", "\\."));
-        
+        if(quantidade <= 0){
+            JOptionPane.showMessageDialog(null, "Não são permitidas quantidades negativas!!");
+            return;
+        }
         //pega o produto do arraylist de atomicos que esta na ram e coloca no de composicao que tb esta na ram
         ProdutoAtomico atual = this.atomicosCadastrados.get(linha);
         atual.setQuantidade(quantidade);
@@ -314,6 +322,7 @@ public class NovoProduto_Administrativo extends javax.swing.JPanel {
             case 5: JOptionPane.showMessageDialog(null, "Por favor selecione pelo menos 1 Produto Atômico!!"); break;
             case 4: JOptionPane.showMessageDialog(null, "Nome pode ter no máximo 200 caracteres!!"); break;
             case 6: JOptionPane.showMessageDialog(null, "Já existe um Produto cadastrado com esse nome!!"); break;
+            case 7: JOptionPane.showMessageDialog(null, "Produto não pode ter valor negativo!!"); break;
         }
     }
     
@@ -331,6 +340,13 @@ public class NovoProduto_Administrativo extends javax.swing.JPanel {
             linha[2] = String.valueOf(atomico.getQuantidade());
             dtm.addRow(linha);
         }
+    }
+    
+    private boolean verificaSeJaEstaNaComposicao(int id_produtoAtomico){
+        for(ProdutoAtomico atual : this.composicao){
+            if(atual.getIdProdutoAtomico() == id_produtoAtomico) return true;
+        }
+        return false;
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable composicaoTable;

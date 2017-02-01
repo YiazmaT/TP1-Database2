@@ -18,6 +18,7 @@ import InterfaceCommonPainels.Login;
 import InterfaceCommonPainels.MenuInicial;
 import InterfaceCadastramentoPainelsAdministrativo.Relatorios_Administrativos;
 import InterfaceCadastramentoPainelsGerencial.NovoFornecedor_Gerencial;
+import InterfaceDialogsAlteracaoDeDados.AlterarSenha;
 import InterfaceVendas.Vendas;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -78,6 +79,7 @@ public class Main extends javax.swing.JFrame {
         jMenuBar2 = new javax.swing.JMenuBar();
         jMenu3 = new javax.swing.JMenu();
         inicio = new javax.swing.JMenuItem();
+        trocarSenhaMenu = new javax.swing.JMenuItem();
         loginmenu = new javax.swing.JMenuItem();
         logout = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
@@ -133,6 +135,15 @@ public class Main extends javax.swing.JFrame {
             }
         });
         jMenu3.add(inicio);
+
+        trocarSenhaMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/exchange small.png"))); // NOI18N
+        trocarSenhaMenu.setText("Trocar Senha");
+        trocarSenhaMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                trocarSenhaMenuActionPerformed(evt);
+            }
+        });
+        jMenu3.add(trocarSenhaMenu);
 
         loginmenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/loginin.png"))); // NOI18N
         loginmenu.setText("Login");
@@ -387,6 +398,10 @@ public class Main extends javax.swing.JFrame {
         this.chamarNovoFornecedor_Gerencial();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
+    private void trocarSenhaMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_trocarSenhaMenuActionPerformed
+        this.chamarTrocarSenha();
+    }//GEN-LAST:event_trocarSenhaMenuActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -464,7 +479,9 @@ public class Main extends javax.swing.JFrame {
         loginmenu.setEnabled(true);
         gerencialMenu.setEnabled(false);
         administrativoMenu.setEnabled(false);
+        trocarSenhaMenu.setEnabled(false);
     }
+    
     //destravar menus após o login
     public void destravarMenus(){
         if(this.permissaoUsuarioLogado == 0){ //login dono
@@ -476,6 +493,7 @@ public class Main extends javax.swing.JFrame {
             administrativoMenu.setEnabled(true);
             novoFuncMenuGerencial.setEnabled(false);
             menuNotaCompra.setEnabled(false);
+            trocarSenhaMenu.setEnabled(true);
         }
         else if(this.permissaoUsuarioLogado == 1){ //login gerente
             funcionalidades.setEnabled(false);
@@ -486,6 +504,7 @@ public class Main extends javax.swing.JFrame {
             administrativoMenu.setEnabled(false);
             novoFuncMenuGerencial.setEnabled(true);
             menuNotaCompra.setEnabled(true);
+            trocarSenhaMenu.setEnabled(true);
         }
         else{
             funcionalidades.setEnabled(true); //login caixa
@@ -494,6 +513,7 @@ public class Main extends javax.swing.JFrame {
             loginmenu.setEnabled(false);
             gerencialMenu.setEnabled(false);
             administrativoMenu.setEnabled(false);
+            trocarSenhaMenu.setEnabled(true);
         }     
     }
     
@@ -506,7 +526,7 @@ public class Main extends javax.swing.JFrame {
     }
     public void chamarMenuInicial(){
         principal.removeAll();
-        principal.add(new MenuInicial(this.nomeUsuarioLogado));
+        principal.add(new MenuInicial(this.nomeUsuarioLogado, this));
         principal.revalidate();
         principal.repaint();
     }
@@ -515,6 +535,11 @@ public class Main extends javax.swing.JFrame {
         principal.add(new Desenvolvedores());
         principal.revalidate();
         principal.repaint();
+    }
+    public void chamarTrocarSenha(){
+        AlterarSenha a = new AlterarSenha(this, true, this);
+        a.setLocationRelativeTo(this);
+        a.setVisible(true);
     }
     
     //chamadores de janelas menu Vendas
@@ -622,5 +647,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenuItem novoFuncMenuGerencial;
     private javax.swing.JPanel principal;
     private javax.swing.JMenuItem relatorios;
+    private javax.swing.JMenuItem trocarSenhaMenu;
     // End of variables declaration//GEN-END:variables
 }

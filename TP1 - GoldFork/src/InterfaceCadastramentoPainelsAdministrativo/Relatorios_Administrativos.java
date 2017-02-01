@@ -7,8 +7,12 @@ package InterfaceCadastramentoPainelsAdministrativo;
 
 import BancoDeDados.BancoDeDados;
 import ClassesLojas.Loja;
+import InterfaceDialogsRelatorios.EstoqueLanchonetes;
 import InterfaceDialogsRelatorios.RelatorioFuncionarios;
 import InterfaceDialogsRelatorios.TodasAsLanchonetes;
+import InterfaceDialogsRelatorios.TodasAsNotasDeCompra;
+import InterfaceDialogsRelatorios.TodasAsNotasDeVenda;
+import InterfaceDialogsRelatorios.TodosOsFornecedores;
 import InterfaceDialogsRelatorios.TodosOsProdutos;
 import InterfaceDialogsRelatorios.TodosOsProdutosAtomicos;
 import InterfaceMain.Main;
@@ -86,7 +90,7 @@ public class Relatorios_Administrativos extends javax.swing.JPanel {
         );
 
         relatoriosBox.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        relatoriosBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Produtos", "Funcionários", "Produtos Atômicos", "Lanchonetes" }));
+        relatoriosBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Produtos", "Funcionários", "Produtos Atômicos", "Lanchonetes", "Fornecedores", "Estoque", "Nota de Compra", "Nota de Venda" }));
         relatoriosBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 relatoriosBoxActionPerformed(evt);
@@ -189,7 +193,7 @@ public class Relatorios_Administrativos extends javax.swing.JPanel {
         
         switch(linha){
             case 0: {
-                TodosOsProdutos d = new TodosOsProdutos(this.pai, true);
+                TodosOsProdutos d = new TodosOsProdutos(this.pai, true, this.pai);
                 d.setLocationRelativeTo(this);
                 d.setVisible(true);
                 break;
@@ -206,19 +210,88 @@ public class Relatorios_Administrativos extends javax.swing.JPanel {
                     return;
                 }
                 
-                RelatorioFuncionarios r = new RelatorioFuncionarios(this.pai, true, selecionadas);
+                RelatorioFuncionarios r = new RelatorioFuncionarios(this.pai, true, selecionadas, this.pai);
                 r.setLocationRelativeTo(this);
                 r.setVisible(true);
                 break;
             }
             case 2: {
-                TodosOsProdutosAtomicos t = new TodosOsProdutosAtomicos(this.pai, true);
+                TodosOsProdutosAtomicos t = new TodosOsProdutosAtomicos(this.pai, true, this.pai);
                 t.setLocationRelativeTo(this);
                 t.setVisible(true);
                 break;
             }
             case 3:{
                 TodasAsLanchonetes t = new TodasAsLanchonetes(this.pai, true, this.pai);
+                t.setLocationRelativeTo(this);
+                t.setVisible(true);
+                pai.chamarRelatorio_Administrativo();
+                break;
+            }
+            case 4:{
+                ArrayList<Loja> selecionadas = new ArrayList<Loja>();
+                for(PanelLojaAuxiliarParaListagem atual : todasLojasPanel){
+                    if(atual.isBotaoSelecionado()){
+                        selecionadas.add(atual.getLoja());
+                    }
+                }
+                if(selecionadas.isEmpty()){
+                    JOptionPane.showMessageDialog(null, "Selecione pelo menos uma loja!");
+                    return;
+                }
+                
+                TodosOsFornecedores t = new TodosOsFornecedores(this.pai, true, selecionadas, this.pai);
+                t.setLocationRelativeTo(this);
+                t.setVisible(true);
+                break;
+            }
+            case 5:{
+                ArrayList<Loja> selecionadas = new ArrayList<Loja>();
+                for(PanelLojaAuxiliarParaListagem atual : todasLojasPanel){
+                    if(atual.isBotaoSelecionado()){
+                        selecionadas.add(atual.getLoja());
+                    }
+                }
+                if(selecionadas.isEmpty()){
+                    JOptionPane.showMessageDialog(null, "Selecione pelo menos uma loja!");
+                    return;
+                }
+                
+                EstoqueLanchonetes e = new EstoqueLanchonetes(this.pai, true, selecionadas, this.pai);
+                e.setLocationRelativeTo(this);
+                e.setVisible(true);
+                break;
+            }
+            case 6:{
+                ArrayList<Loja> selecionadas = new ArrayList<Loja>();
+                for(PanelLojaAuxiliarParaListagem atual : todasLojasPanel){
+                    if(atual.isBotaoSelecionado()){
+                        selecionadas.add(atual.getLoja());
+                    }
+                }
+                if(selecionadas.isEmpty()){
+                    JOptionPane.showMessageDialog(null, "Selecione pelo menos uma loja!");
+                    return;
+                }
+                
+                TodasAsNotasDeCompra t = new TodasAsNotasDeCompra(this.pai, true, selecionadas);
+                t.setLocationRelativeTo(this);
+                t.setVisible(true);
+                break;
+            }
+            case 7:{
+                ArrayList<Loja> selecionadas = new ArrayList<Loja>();
+                for(PanelLojaAuxiliarParaListagem atual : todasLojasPanel){
+                    if(atual.isBotaoSelecionado()){
+                        selecionadas.add(atual.getLoja());
+                    }
+                }
+                if(selecionadas.isEmpty()){
+                    JOptionPane.showMessageDialog(null, "Selecione pelo menos uma loja!");
+                    return;
+                }
+                
+                TodasAsNotasDeVenda t = new TodasAsNotasDeVenda(this.pai, true, selecionadas);
                 t.setLocationRelativeTo(this);
                 t.setVisible(true);
                 break;
@@ -243,6 +316,10 @@ public class Relatorios_Administrativos extends javax.swing.JPanel {
             case 1: destravarlojas(); break;
             case 2: selecionarTodos(false); travarlojas(); break;
             case 3: selecionarTodos(false); travarlojas(); break;
+            case 4: destravarlojas(); break;
+            case 5: destravarlojas(); break;
+            case 6: destravarlojas(); break;
+            case 7: destravarlojas(); break;    
         }
     }//GEN-LAST:event_relatoriosBoxActionPerformed
     

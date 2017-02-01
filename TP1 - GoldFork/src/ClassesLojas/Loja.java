@@ -24,18 +24,18 @@ public class Loja {
         this.endereco_numero = endereco_numero;
         this.cnpj = cnpj;
     }
-
+    
+    public Loja(int id_lanchonete, String nome) {
+        this.id_lanchonete = id_lanchonete;
+        this.nome = nome;
+    }
+    
     public String getCnpj() {
         return cnpj;
     }
 
     public void setCnpj(String cnpj) {
         this.cnpj = cnpj;
-    }
-    
-    public Loja(int id_lanchonete, String nome) {
-        this.id_lanchonete = id_lanchonete;
-        this.nome = nome;
     }
     
     public int getId_lanchonete() {

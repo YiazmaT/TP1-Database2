@@ -1,1 +1,0 @@
-INSERT INTO lanchonete(nome, telefone, cnpj, endereco_rua, endereco_numero, endereco_bairro, endereco_cidade, endereco_cep, endereco_estado, cod_dono) VALUES("SIUHIAUSHDUIAHSD","(51)6516-5161","65.161.651/6516-51","ausbduygsd",651,"ajbsdbs","ajsbdahbsd","16519-814","KL","1");

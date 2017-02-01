@@ -539,7 +539,7 @@ public class PagamentoDialog extends javax.swing.JDialog {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         //pegar e validar valor;
-        if(valorPagamentoField.getText().equals("") || 0>Float.parseFloat(valorPagamentoField.getText().replaceAll("\\,", "\\."))){
+        if(valorPagamentoField.getText().equals("") || 0>=Float.parseFloat(valorPagamentoField.getText().replaceAll("\\,", "\\."))){
                 this.erro(1);
                 return;
         }
@@ -600,6 +600,7 @@ public class PagamentoDialog extends javax.swing.JDialog {
         this.dinheiroRecebidoField.setText("R$0,00");
         this.totalRecebido -= this.recebidoDinheiro;
         this.recebidoDinheiro = 0.0f;
+        this.troco = 0.0f;
         this.totalRecebidoLabel.setText("R$"+String.format("%.2f", this.totalRecebido));
         trocoLabel.setText("R$0,00");
         

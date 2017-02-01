@@ -9,8 +9,11 @@ import BancoDeDados.BancoDeDados;
 import ClassesFuncionarios.Caixa;
 import ClassesFuncionarios.Cozinheiro;
 import ClassesFuncionarios.Faxineiro;
+import ClassesFuncionarios.FuncionarioTabela;
 import ClassesFuncionarios.Gerente;
 import ClassesLojas.Loja;
+import InterfaceDialogsAlteracaoDeDados.ModificarUsuario;
+import InterfaceMain.Main;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 
@@ -20,13 +23,16 @@ import javax.swing.table.DefaultTableModel;
  */
 public class RelatorioFuncionarios extends javax.swing.JDialog {
     private ArrayList<Loja> lojas;
+    private ArrayList<FuncionarioTabela> func;
+    private Main pai;
     /**
      * Creates new form RelatorioFuncionarios
      */
-    public RelatorioFuncionarios(java.awt.Frame parent, boolean modal, ArrayList<Loja> lojas) {
+    public RelatorioFuncionarios(java.awt.Frame parent, boolean modal, ArrayList<Loja> lojas, Main pai) {
         super(parent, modal);
         initComponents();
         this.lojas = lojas;
+        this.pai = pai;
     }
 
     /**
@@ -48,12 +54,13 @@ public class RelatorioFuncionarios extends javax.swing.JDialog {
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         selecionaTodos = new javax.swing.JRadioButton();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Relatório de Funcionários");
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel2.setText("Funcionários:");
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel2.setText("Funcionários Cadastrados:");
 
         funcionariosTable.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         funcionariosTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -74,7 +81,7 @@ public class RelatorioFuncionarios extends javax.swing.JDialog {
         });
         jScrollPane3.setViewportView(funcionariosTable);
 
-        gerentesBox.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        gerentesBox.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         gerentesBox.setText("Gerentes");
         gerentesBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -82,13 +89,13 @@ public class RelatorioFuncionarios extends javax.swing.JDialog {
             }
         });
 
-        caixasBox.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        caixasBox.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         caixasBox.setText("Caixas");
 
-        auxiliarBox.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        auxiliarBox.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         auxiliarBox.setText("Auxiliares de Limpeza");
 
-        cozinheirosBox.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        cozinheirosBox.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         cozinheirosBox.setText("Cozinheiros");
         cozinheirosBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -96,7 +103,7 @@ public class RelatorioFuncionarios extends javax.swing.JDialog {
             }
         });
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/power (1).png"))); // NOI18N
         jButton1.setText("Gerar Relatório");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -105,10 +112,10 @@ public class RelatorioFuncionarios extends javax.swing.JDialog {
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel1.setText("Selecione os tipos de funcionário desejado:");
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel1.setText("Selecione os tipos de funcionários desejados:");
 
-        selecionaTodos.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        selecionaTodos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         selecionaTodos.setText("Selecionar Todos");
         selecionaTodos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -121,6 +128,15 @@ public class RelatorioFuncionarios extends javax.swing.JDialog {
             }
         });
 
+        jButton2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/shuffle (1).png"))); // NOI18N
+        jButton2.setText("Alterar Informações do Funcionário");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -128,10 +144,13 @@ public class RelatorioFuncionarios extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 1180, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton2))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton1)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(gerentesBox)
@@ -143,9 +162,9 @@ public class RelatorioFuncionarios extends javax.swing.JDialog {
                                         .addComponent(auxiliarBox)
                                         .addGap(18, 18, 18)
                                         .addComponent(selecionaTodos))))
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel1))
-                        .addGap(0, 695, Short.MAX_VALUE)))
+                            .addComponent(jLabel1)
+                            .addComponent(jButton1))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -153,7 +172,7 @@ public class RelatorioFuncionarios extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(gerentesBox)
                     .addComponent(auxiliarBox)
@@ -164,12 +183,17 @@ public class RelatorioFuncionarios extends javax.swing.JDialog {
                     .addComponent(cozinheirosBox))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 455, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton2))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabel1, jLabel2});
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -183,20 +207,7 @@ public class RelatorioFuncionarios extends javax.swing.JDialog {
     }//GEN-LAST:event_cozinheirosBoxActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        DefaultTableModel dtm = (DefaultTableModel) funcionariosTable.getModel();
-        dtm.setRowCount(0);
-        if(gerentesBox.isSelected()){
-            this.listarGerentes(this.lojas);
-        }
-        if(caixasBox.isSelected()){
-            this.listarCaixas(this.lojas);
-        }
-        if(auxiliarBox.isSelected()){
-            this.listarAuxiliares(this.lojas);
-        }
-        if(cozinheirosBox.isSelected()){
-            this.listarCozinheiros(this.lojas);
-        }
+        this.preecherTabela();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void selecionaTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selecionaTodosActionPerformed
@@ -206,6 +217,17 @@ public class RelatorioFuncionarios extends javax.swing.JDialog {
     private void selecionaTodosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_selecionaTodosMouseClicked
         this.verificaSelecionarTodos();
     }//GEN-LAST:event_selecionaTodosMouseClicked
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        int linha = funcionariosTable.getSelectedRow();
+        if(linha == -1) return;
+        
+        ModificarUsuario m = new ModificarUsuario(this.pai, true, this.func.get(linha));
+        m.setLocationRelativeTo(this.pai);
+        m.setVisible(true);
+        
+        this.preecherTabela();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     public void listarGerentes(ArrayList<Loja> lojas){
         String nomeloja;
@@ -223,6 +245,7 @@ public class RelatorioFuncionarios extends javax.swing.JDialog {
                     linha[3] = nomeloja;
                     linha[4] = "Gerente";
                     dtm.addRow(linha);
+                    this.func.add(new FuncionarioTabela(g.getId_funcionario(), "gerente"));
                 }
             }
         }
@@ -244,6 +267,7 @@ public class RelatorioFuncionarios extends javax.swing.JDialog {
                     linha[3] = nomeloja;
                     linha[4] = "Caixa";
                     dtm.addRow(linha);
+                    this.func.add(new FuncionarioTabela(c.getId_funcionario(), "caixa"));
                 }
             }
         }
@@ -265,6 +289,7 @@ public class RelatorioFuncionarios extends javax.swing.JDialog {
                     linha[3] = nomeloja;
                     linha[4] = "Auxiliar de Limpeza";
                     dtm.addRow(linha);
+                    this.func.add(new FuncionarioTabela(f.getId_funcionario(), "auxiliar"));
                 }
             }
         }
@@ -286,6 +311,7 @@ public class RelatorioFuncionarios extends javax.swing.JDialog {
                     linha[3] = nomeloja;
                     linha[4] = "Cozinheiro";
                     dtm.addRow(linha);
+                    this.func.add(new FuncionarioTabela(c.getId_funcionario(), "cozinheiro"));
                 }
             }
         }
@@ -307,6 +333,23 @@ public class RelatorioFuncionarios extends javax.swing.JDialog {
         }
     }
     
+    public void preecherTabela(){
+        DefaultTableModel dtm = (DefaultTableModel) funcionariosTable.getModel();
+        dtm.setRowCount(0);
+        this.func = new ArrayList<FuncionarioTabela>();
+        if(gerentesBox.isSelected()){
+            this.listarGerentes(this.lojas);
+        }
+        if(caixasBox.isSelected()){
+            this.listarCaixas(this.lojas);
+        }
+        if(auxiliarBox.isSelected()){
+            this.listarAuxiliares(this.lojas);
+        }
+        if(cozinheirosBox.isSelected()){
+            this.listarCozinheiros(this.lojas);
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox auxiliarBox;
     private javax.swing.JCheckBox caixasBox;
@@ -314,6 +357,7 @@ public class RelatorioFuncionarios extends javax.swing.JDialog {
     private javax.swing.JTable funcionariosTable;
     private javax.swing.JCheckBox gerentesBox;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane3;

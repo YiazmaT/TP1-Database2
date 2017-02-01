@@ -198,24 +198,10 @@ public class Login extends javax.swing.JPanel {
             this.pai.chamarMenuInicial();
             this.pai.destravarMenus();
         }else{
-            loginBox.setText("");
+            //loginBox.setText("");
             senhaBox.setText("");
             this.senhaIncorreta();
         }
-        
-        /*
-        if(login.equals("root") && senha.equals("root")){
-            this.pai.setNomeUsuarioLogado(login);
-            this.pai.setIdUsuarioLogado(1);
-            this.pai.setPermissaoUsuarioLogado(0);
-            this.pai.setIdUsuarioLoja(0);
-            this.pai.chamarMenuInicial();
-            this.pai.destravarMenus();
-        }
-        else{
-            
-        }
-                */
     }//GEN-LAST:event_loginButtonActionPerformed
 
     private void senhaBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_senhaBoxActionPerformed
