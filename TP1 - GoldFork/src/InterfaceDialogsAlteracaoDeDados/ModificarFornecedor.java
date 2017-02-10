@@ -215,13 +215,24 @@ public class ModificarFornecedor extends javax.swing.JDialog {
         if(!nome.equals(this.fornecedor.getNome())){
             if(BancoDeDados.verificaIfFornecedorComNomeIgualUtilizandoIdDono(nome, pai.getIdUsuarioLogado()) == true){this.erro(4); return;}
         }
-        
 
         //pegar e validar telefone;
         String telefone = telefoneField.getText();
         if(telefone.contains(" ")) {erro(5); return;}
-
-        BancoDeDados.updateFornecedor(this.fornecedor.getId_fornecedor(), nome, telefone, lojasAfetadas);
+        
+        
+        //string para confirmação de lojas:
+        String l="";
+        for(Loja atual : lojasAfetadas){
+            l+="\n"+atual.getNome();
+        }
+        int confirm;
+        confirm = JOptionPane.showConfirmDialog(null, "Deseja Realmente Alterar os Dados Deste Fornecedor para: \nNome: "+nome+"\nTelefone: "+telefone+"\nLojas Afetadas:"+l, "Modificar Fornecedor", JOptionPane.YES_NO_OPTION);
+        if(confirm == 0){
+            BancoDeDados.updateFornecedor(this.fornecedor.getId_fornecedor(), nome, telefone, lojasAfetadas);
+        }
+        else return;
+        
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 

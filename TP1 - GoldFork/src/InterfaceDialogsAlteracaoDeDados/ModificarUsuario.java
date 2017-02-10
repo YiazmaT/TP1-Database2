@@ -143,7 +143,16 @@ public class ModificarUsuario extends javax.swing.JDialog {
         String telefone = telefoneField.getText();
         if(telefone.contains(" ")){this.erro(3); return;}
         
-        BancoDeDados.updateFuncionario(nome, telefone, this.func);
+        int confirm;
+        confirm = JOptionPane.showConfirmDialog(null, "Deseja Realmente Alterar os Dados do Funcionário para: "
+                +"\nNome: "+nome
+                +"\nTelefone: "+telefone
+                , "Modificar Funcionário", JOptionPane.YES_NO_OPTION);
+        if(confirm == 0){
+            BancoDeDados.updateFuncionario(nome, telefone, this.func);
+        }
+        else return;
+        
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 

@@ -1,0 +1,10 @@
+DELETE FROM cozinheiro WHERE cozinheiro.id_cozinheiro = 1;
+DELETE FROM cozinheiro WHERE cozinheiro.id_cozinheiro = 2;
+DELETE FROM cozinheiro WHERE cozinheiro.id_cozinheiro = 2;
+DELETE FROM cozinheiro WHERE cozinheiro.id_cozinheiro = 1;
+DELETE FROM gerente WHERE gerente.id_gerente = 1;
+DELETE FROM caixa WHERE caixa.id_caixa = 2;
+DELETE FROM caixa WHERE caixa.id_caixa = 2;
+DELETE FROM composicao_produto WHERE composicao_produto.cod_produto = 1;
+DELETE FROM composicao_produto WHERE composicao_produto.cod_produto = 1;
+DELETE FROM composicao_produto WHERE composicao_produto.cod_produto = 6;

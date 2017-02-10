@@ -144,9 +144,13 @@ public class AlterarSenha extends javax.swing.JDialog {
         if(!novaSenha1.equals(novaSenha2)){this.erro(2); return;}
         if(novaSenha1.equals("") == true || novaSenha2.equals("") == true){this.erro(3); return;}
         
-        BancoDeDados.updateSenha(novaSenha1, pai.getPermissaoUsuarioLogado(), pai.getIdUsuarioLogado());
-        
-        this.dispose();
+        int confirm=0;
+        JOptionPane.showConfirmDialog(null, "Deseja Realmente Alterar Sua Senha?", "Alterar Senha", confirm);
+        if(confirm == JOptionPane.YES_OPTION){
+            BancoDeDados.updateSenha(novaSenha1, pai.getPermissaoUsuarioLogado(), pai.getIdUsuarioLogado());
+            this.dispose();
+        }
+        else{return;}      
     }//GEN-LAST:event_jButton1ActionPerformed
 
     public void erro(int e){

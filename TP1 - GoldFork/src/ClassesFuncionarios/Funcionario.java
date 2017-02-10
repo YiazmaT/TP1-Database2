@@ -14,14 +14,24 @@ public class Funcionario {
     private int id_funcionario;
     private String telefone;
     private String cpf;
+    private boolean ativo;
 
-    public Funcionario(String nome, int id_funcionario, String telefone, String cpf) {
+    public Funcionario(String nome, int id_funcionario, String telefone, String cpf, boolean ativo) {
         this.nome = nome;
         this.id_funcionario = id_funcionario;
         this.telefone = telefone;
         this.cpf = cpf;
+        this.ativo = ativo;
     }
 
+    public boolean isAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
+    }
+    
     public String getNome() {
         return nome;
     }

@@ -15,6 +15,7 @@ import ClassesLojas.Loja;
 import InterfaceDialogsAlteracaoDeDados.ModificarUsuario;
 import InterfaceMain.Main;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -55,6 +56,7 @@ public class RelatorioFuncionarios extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         selecionaTodos = new javax.swing.JRadioButton();
         jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Relatório de Funcionários");
@@ -137,6 +139,15 @@ public class RelatorioFuncionarios extends javax.swing.JDialog {
             }
         });
 
+        jButton3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/rubbish-bin (1).png"))); // NOI18N
+        jButton3.setText("Deletar Funcionário");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -148,6 +159,8 @@ public class RelatorioFuncionarios extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton2))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -189,7 +202,9 @@ public class RelatorioFuncionarios extends javax.swing.JDialog {
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 455, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jButton2))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton2)
+                        .addComponent(jButton3)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -229,6 +244,31 @@ public class RelatorioFuncionarios extends javax.swing.JDialog {
         this.preecherTabela();
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        int linha = funcionariosTable.getSelectedRow();
+        if(linha == -1) return;
+        
+        int confirm=0;
+        confirm = JOptionPane.showConfirmDialog(null, "Deseja Realmente Apagar Esse Funcionário:\n"+func.get(linha).getNome()+"?\n"+"Tipo: "+func.get(linha).getTipo().toUpperCase(), "Apagar Funcionário", JOptionPane.YES_NO_OPTION);
+        if(confirm == 0){
+            if(func.get(linha).getTipo().equals("gerente")){
+                BancoDeDados.desligarFuncionario(func.get(linha).getId(), 0);
+            }
+            if(func.get(linha).getTipo().equals("caixa")){
+                BancoDeDados.desligarFuncionario(func.get(linha).getId(), 1);
+            }
+            if(func.get(linha).getTipo().equals("auxiliar")){
+                BancoDeDados.desligarFuncionario(func.get(linha).getId(), 2);
+            }
+            if(func.get(linha).getTipo().equals("cozinheiro")){
+                BancoDeDados.desligarFuncionario(func.get(linha).getId(), 3);
+            }
+        }
+        else{return;}
+        
+        this.preecherTabela();
+    }//GEN-LAST:event_jButton3ActionPerformed
+
     public void listarGerentes(ArrayList<Loja> lojas){
         String nomeloja;
         ArrayList<Gerente> gerentes;
@@ -239,13 +279,15 @@ public class RelatorioFuncionarios extends javax.swing.JDialog {
             gerentes = BancoDeDados.gerentesDeUmaLoja(atual.getId_lanchonete());
             if(!gerentes.isEmpty()){
                 for(Gerente g : gerentes){
-                    linha[0] = g.getNome();
-                    linha[1] = g.getTelefone();
-                    linha[2] = g.getCpf();
-                    linha[3] = nomeloja;
-                    linha[4] = "Gerente";
-                    dtm.addRow(linha);
-                    this.func.add(new FuncionarioTabela(g.getId_funcionario(), "gerente"));
+                    if(g.isAtivo()){
+                        linha[0] = g.getNome();
+                        linha[1] = g.getTelefone();
+                        linha[2] = g.getCpf();
+                        linha[3] = nomeloja;
+                        linha[4] = "Gerente";
+                        dtm.addRow(linha);
+                        this.func.add(new FuncionarioTabela(g.getId_funcionario(), "gerente", g.getNome()));
+                    }
                 }
             }
         }
@@ -261,13 +303,15 @@ public class RelatorioFuncionarios extends javax.swing.JDialog {
             caixas = BancoDeDados.caixasDeUmaLoja(atual.getId_lanchonete());
             if(!caixas.isEmpty()){
                 for(Caixa c : caixas){
-                    linha[0] = c.getNome();
-                    linha[1] = c.getTelefone();
-                    linha[2] = c.getCpf();
-                    linha[3] = nomeloja;
-                    linha[4] = "Caixa";
-                    dtm.addRow(linha);
-                    this.func.add(new FuncionarioTabela(c.getId_funcionario(), "caixa"));
+                    if(c.isAtivo()){
+                        linha[0] = c.getNome();
+                        linha[1] = c.getTelefone();
+                        linha[2] = c.getCpf();
+                        linha[3] = nomeloja;
+                        linha[4] = "Caixa";
+                        dtm.addRow(linha);
+                        this.func.add(new FuncionarioTabela(c.getId_funcionario(), "caixa", c.getNome()));
+                    }
                 }
             }
         }
@@ -283,13 +327,15 @@ public class RelatorioFuncionarios extends javax.swing.JDialog {
             auxiliares = BancoDeDados.faxineirosDeUmaLoja(atual.getId_lanchonete());
             if(!auxiliares.isEmpty()){
                 for(Faxineiro f : auxiliares){
-                    linha[0] = f.getNome();
-                    linha[1] = f.getTelefone();
-                    linha[2] = f.getCpf();
-                    linha[3] = nomeloja;
-                    linha[4] = "Auxiliar de Limpeza";
-                    dtm.addRow(linha);
-                    this.func.add(new FuncionarioTabela(f.getId_funcionario(), "auxiliar"));
+                    if(f.isAtivo()){
+                        linha[0] = f.getNome();
+                        linha[1] = f.getTelefone();
+                        linha[2] = f.getCpf();
+                        linha[3] = nomeloja;
+                        linha[4] = "Auxiliar de Limpeza";
+                        dtm.addRow(linha);
+                        this.func.add(new FuncionarioTabela(f.getId_funcionario(), "auxiliar", f.getNome()));
+                    }
                 }
             }
         }
@@ -305,13 +351,15 @@ public class RelatorioFuncionarios extends javax.swing.JDialog {
             cozinheiros = BancoDeDados.cozinheirosDeUmaLoja(atual.getId_lanchonete());
             if(!cozinheiros.isEmpty()){
                 for(Cozinheiro c : cozinheiros){
-                    linha[0] = c.getNome();
-                    linha[1] = c.getTelefone();
-                    linha[2] = c.getCpf();
-                    linha[3] = nomeloja;
-                    linha[4] = "Cozinheiro";
-                    dtm.addRow(linha);
-                    this.func.add(new FuncionarioTabela(c.getId_funcionario(), "cozinheiro"));
+                   if(c.isAtivo()){
+                       linha[0] = c.getNome();
+                        linha[1] = c.getTelefone();
+                        linha[2] = c.getCpf();
+                        linha[3] = nomeloja;
+                        linha[4] = "Cozinheiro";
+                        dtm.addRow(linha);
+                        this.func.add(new FuncionarioTabela(c.getId_funcionario(), "cozinheiro", c.getNome()));
+                   }     
                 }
             }
         }
@@ -358,6 +406,7 @@ public class RelatorioFuncionarios extends javax.swing.JDialog {
     private javax.swing.JCheckBox gerentesBox;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane3;

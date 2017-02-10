@@ -11,8 +11,8 @@ package ClassesFuncionarios;
  */
 public class Cozinheiro extends Funcionario{
 
-    public Cozinheiro(String nome, int id_funcionario, String telefone, String cpf) {
-        super(nome, id_funcionario, telefone, cpf);
+    public Cozinheiro(String nome, int id_funcionario, String telefone, String cpf, boolean ativo) {
+        super(nome, id_funcionario, telefone, cpf, ativo);
     }
     
 }

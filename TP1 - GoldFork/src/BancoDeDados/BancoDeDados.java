@@ -320,7 +320,7 @@ public class BancoDeDados {
             ResultSet result = stat.executeQuery(send);
 
             while (result.next()) {
-                Gerente atual = new Gerente(result.getString("login"), result.getString("senha"), result.getString("nome"), result.getInt("id_gerente"), result.getString("telefone"), result.getString("cpf"));
+                Gerente atual = new Gerente(result.getString("login"), result.getString("senha"), result.getString("nome"), result.getInt("id_gerente"), result.getString("telefone"), result.getString("cpf"), result.getBoolean("ativo"));
                 g.add(atual);
             }
 
@@ -344,7 +344,7 @@ public class BancoDeDados {
             ResultSet result = stat.executeQuery(send);
 
             while (result.next()) {
-                Caixa atual = new Caixa(result.getString("login"), result.getString("senha"), result.getString("nome"), result.getInt("id_caixa"), result.getString("telefone"), result.getString("cpf"));
+                Caixa atual = new Caixa(result.getString("login"), result.getString("senha"), result.getString("nome"), result.getInt("id_caixa"), result.getString("telefone"), result.getString("cpf"), result.getBoolean("ativo"));
                 c.add(atual);
             }
 
@@ -368,7 +368,7 @@ public class BancoDeDados {
             ResultSet result = stat.executeQuery(send);
 
             while (result.next()) {
-                Faxineiro atual = new Faxineiro(result.getString("nome"), result.getInt("id_faxineiro"), result.getString("telefone"), result.getString("cpf"));
+                Faxineiro atual = new Faxineiro(result.getString("nome"), result.getInt("id_faxineiro"), result.getString("telefone"), result.getString("cpf"), result.getBoolean("ativo"));
                 f.add(atual);
             }
 
@@ -392,7 +392,7 @@ public class BancoDeDados {
             ResultSet result = stat.executeQuery(send);
 
             while (result.next()) {
-                Cozinheiro atual = new Cozinheiro(result.getString("nome"), result.getInt("id_cozinheiro"), result.getString("telefone"), result.getString("cpf"));
+                Cozinheiro atual = new Cozinheiro(result.getString("nome"), result.getInt("id_cozinheiro"), result.getString("telefone"), result.getString("cpf"), result.getBoolean("ativo"));
                 c.add(atual);
             }
 
@@ -688,7 +688,7 @@ public class BancoDeDados {
             ResultSet result = stat.executeQuery(send);
 
             while (result.next()) {
-                atual = new Gerente(result.getString("login"), result.getString("senha"), result.getString("nome"), result.getInt("id_gerente"), result.getString("telefone"), result.getString("cpf"));
+                atual = new Gerente(result.getString("login"), result.getString("senha"), result.getString("nome"), result.getInt("id_gerente"), result.getString("telefone"), result.getString("cpf"), result.getBoolean("ativo"));
             }
 
             stat.close();
@@ -711,7 +711,7 @@ public class BancoDeDados {
             ResultSet result = stat.executeQuery(send);
 
             while (result.next()) {
-                atual = new Caixa(result.getString("login"), result.getString("senha"), result.getString("nome"), result.getInt("id_caixa"), result.getString("telefone"), result.getString("cpf"));
+                atual = new Caixa(result.getString("login"), result.getString("senha"), result.getString("nome"), result.getInt("id_caixa"), result.getString("telefone"), result.getString("cpf"), result.getBoolean("ativo"));
             }
 
             stat.close();
@@ -734,7 +734,7 @@ public class BancoDeDados {
             ResultSet result = stat.executeQuery(send);
 
             while (result.next()) {
-                atual = new Faxineiro(result.getString("nome"), result.getInt("id_faxineiro"), result.getString("telefone"), result.getString("cpf"));
+                atual = new Faxineiro(result.getString("nome"), result.getInt("id_faxineiro"), result.getString("telefone"), result.getString("cpf"), result.getBoolean("ativo"));
             }
 
             stat.close();
@@ -757,7 +757,7 @@ public class BancoDeDados {
             ResultSet result = stat.executeQuery(send);
 
             while (result.next()) {
-                atual = new Cozinheiro(result.getString("nome"), result.getInt("id_cozinheiro"), result.getString("telefone"), result.getString("cpf"));
+                atual = new Cozinheiro(result.getString("nome"), result.getInt("id_cozinheiro"), result.getString("telefone"), result.getString("cpf"), result.getBoolean("ativo"));
             }
 
             stat.close();
@@ -767,6 +767,38 @@ public class BancoDeDados {
         }
         return atual;
     } 
+    
+    public static ArrayList<NotaDeCompra> notasDeCompraEntreDatas(int id_loja, String data1, String data2){
+        ArrayList<NotaDeCompra> notas = new ArrayList<NotaDeCompra>();
+        String send = "SELECT * FROM nota_de_compra WHERE "
+        +"nota_de_compra.cod_lanchonete = "+id_loja
+        +" AND nota_de_compra.data BETWEEN "
+        +"\""+data1+"\""
+        +" AND "
+        +"\""+data2+"\""
+        +";";
+        BancoDeDados.logGeral(send);
+        BancoDeDados.logSelect(send);
+        
+        try {
+            Connection conn = DriverManager.getConnection(enderecoIP, BANCOusuario, BANCOsenha);
+            Statement stat = conn.createStatement();
+            ResultSet result = result = stat.executeQuery(send);
+
+            while (result.next()) {
+                NotaDeCompra n = new NotaDeCompra(result.getInt("id_nota_compra"), result.getString("data"), result.getFloat("valor_total"), result.getInt("cod_fornecedor"), result.getInt("cod_lanchonete"));
+                notas.add(n);
+            }
+
+            stat.close();
+            conn.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Falha ao conectar com o Banco de Dados!!\n" + ex.getMessage());
+        }
+
+        return notas;
+    }
+    
     /*
      *-----INSERTS-----*
      */
@@ -1136,6 +1168,7 @@ public class BancoDeDados {
             JOptionPane.showMessageDialog(null, "Falha ao conectar com o Banco de Dados!!\n" + ex.getMessage());
         }
     } 
+    
     /*
      *-----UPDATES-----*
      */
@@ -1338,6 +1371,35 @@ public class BancoDeDados {
             JOptionPane.showMessageDialog(null, "Falha ao conectar com o Banco de Dados!!\n" + ex.getMessage());
         }
     }
+    
+    public static void desligarFuncionario(int id_funcionario, int tipo){
+        String send = "";
+        switch(tipo){
+            //gerente
+            case 0: send = "UPDATE gerente SET gerente.ativo = false WHERE gerente.id_gerente = "+id_funcionario+";"; break;
+            //caixa
+            case 1: send = "UPDATE caixa SET caixa.ativo = false WHERE caixa.id_caixa = "+id_funcionario+";"; break;
+            //faxineiro
+            case 2: send = "UPDATE faxineiro SET faxineiro.ativo = false WHERE faxineiro.id_faxineiro = "+id_funcionario+";"; break;
+            //cozinheiro
+            case 3: send = "UPDATE cozinheiro SET cozinheiro.ativo = false WHERE cozinheiro.id_cozinheiro = "+id_funcionario+";"; break;
+        }
+        BancoDeDados.logGeral(send);
+        BancoDeDados.logUpdate(send);
+        
+        try {
+            Connection conn = DriverManager.getConnection(enderecoIP, BANCOusuario, BANCOsenha);
+            Statement stat = conn.createStatement();
+            stat.executeUpdate(send);
+
+            stat.close();
+            conn.close();
+            JOptionPane.showMessageDialog(null, "Usuário Desligado Com Sucesso!");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Falha ao conectar com o Banco de Dados!!\n" + ex.getMessage());
+        }
+    }
+
     /*
      *-----PROCEDURES CALL-----*
      */
@@ -1583,6 +1645,7 @@ public class BancoDeDados {
         }
         return false;
     }
+    
     /*
      *-----MÉTODOS PARA GERAR LOG-----*
      */

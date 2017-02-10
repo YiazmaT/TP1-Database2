@@ -184,7 +184,14 @@ public class ModificarEstoque extends javax.swing.JDialog {
             return;
         }
         
-        BancoDeDados.updateEstoque(this.produto.getIdProdutoAtomico(), this.loja.getId_lanchonete(), quantidade);
+        
+        int confirm;
+        confirm = JOptionPane.showConfirmDialog(null, "Deseja Realmente Alterar a Quantidade para: "+quantidade, "Alterar Quantidade em Estoque", JOptionPane.YES_NO_OPTION);
+        if(confirm == 0){
+            BancoDeDados.updateEstoque(this.produto.getIdProdutoAtomico(), this.loja.getId_lanchonete(), quantidade);
+        }
+        else return;
+        
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 

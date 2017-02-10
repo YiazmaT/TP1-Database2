@@ -44,7 +44,7 @@ public class ModificarProduto extends javax.swing.JDialog {
         
         //preenchendo nome e valor;
         nomeField.setText(this.produto.getNome());
-        valorField.setText(String.valueOf(this.produto.getValor()));
+        valorField.setText(String.format("%.2f",this.produto.getValor()));
     }
 
     /**
@@ -265,8 +265,22 @@ public class ModificarProduto extends javax.swing.JDialog {
             this.erro(5);
             return;
         }
-
-        BancoDeDados.updateProduto(this.produto.getId_produto(), nome, valor, this.composicao);
+        
+        String c="";
+        for(ProdutoAtomico atual : this.composicao){
+            c+="\n"+atual.getNome()+" - Quantidade: "+String.format("%.3f", atual.getQuantidade());
+        }
+        int confirm;
+        confirm = JOptionPane.showConfirmDialog(null, "Deseja Realmente Alterar as Informações do Produto para: "
+                +"\nNome: "+nome
+                +"\nValor: R$"+String.format("%.2f",valor)
+                +"\nComposicao:"+c
+                , "Modificar Produto", JOptionPane.YES_NO_OPTION);
+        if(confirm == 0){
+            BancoDeDados.updateProduto(this.produto.getId_produto(), nome, valor, this.composicao);
+        }
+        else return;
+        
         this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
 

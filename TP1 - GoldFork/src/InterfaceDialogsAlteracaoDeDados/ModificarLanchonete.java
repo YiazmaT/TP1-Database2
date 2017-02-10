@@ -278,7 +278,22 @@ public class ModificarLanchonete extends javax.swing.JDialog {
             }
         }
  
-        BancoDeDados.updateLanchonete(nome, telefone, rua, numero, bairro, cidade, cep, estado, loja.getId_lanchonete());
+        int confirm;
+        confirm = JOptionPane.showConfirmDialog(null, "Deseja Realmente Alterar os Dados da Lanchonete para: "
+                +"\nNome: "+nome
+                +"\nTelefone: "+telefone
+                +"\nRua: "+rua
+                +"\nNúmero: "+numero
+                +"\nBairro: "+bairro
+                +"\nCidade: "+cidade
+                +"\nCEP: "+cep
+                +"\nEstado: "+estado
+                , "Modificar Lanchonete", JOptionPane.YES_NO_OPTION);
+        if(confirm == 0){
+            BancoDeDados.updateLanchonete(nome, telefone, rua, numero, bairro, cidade, cep, estado, loja.getId_lanchonete());
+        }
+        else return;
+        
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 

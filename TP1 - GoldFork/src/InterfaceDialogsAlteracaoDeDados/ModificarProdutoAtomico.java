@@ -178,7 +178,16 @@ public class ModificarProdutoAtomico extends javax.swing.JDialog {
         if(unidade.length() > 25) {this.erro(5); return;}
         if(!unidade.matches("([0-9a-zA-Z ]|â|à|ã|ä|á|Á|ê|ë|é|É|î|ï|í|Í|ô|õ|ö|ó|Ó|û|ü|ú|Ú|'|ç|-|_){1,50}")){this.erro(2); return;}
 
-        BancoDeDados.updateProdutoAtomico(this.produto.getIdProdutoAtomico(), nome, unidade);
+        int confirm;
+        confirm = JOptionPane.showConfirmDialog(null, "Deseja Realmente Alterar os Dados do Produto Atômico para: "
+                +"\nNome: "+nome
+                +"\nUnidade de Medida: "+unidade
+                , "Modificar Produto Atômico", JOptionPane.YES_NO_OPTION);
+        if(confirm == 0){
+            BancoDeDados.updateProdutoAtomico(this.produto.getIdProdutoAtomico(), nome, unidade);
+        }
+        else return;
+        
         this.dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
 
