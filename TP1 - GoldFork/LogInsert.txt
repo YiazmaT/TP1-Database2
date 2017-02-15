@@ -18,3 +18,11 @@ INSERT INTO composicao_produto(cod_produto, cod_produto_atomico, quantidade) VAL
 INSERT INTO composicao_produto(cod_produto, cod_produto_atomico, quantidade) VALUES (6,3,2.0);
 INSERT INTO composicao_produto(cod_produto, cod_produto_atomico, quantidade) VALUES (6,21,2.0);
 INSERT INTO composicao_produto(cod_produto, cod_produto_atomico, quantidade) VALUES(6, 9, 2.0);
+INSERT INTO fornecedor(nome, telefone, cnpj, ativo) VALUES("ADASASFASF","(12)3123-1251","51.251.251/2512-51", true);
+INSERT INTO fornecimento(cod_fornecedor, cod_lanchonete) VALUES(6, 1);
+INSERT INTO fornecimento(cod_fornecedor, cod_lanchonete) VALUES(6, 2);
+INSERT INTO fornecimento(cod_fornecedor, cod_lanchonete) VALUES(6, 3);
+INSERT INTO fornecedor(nome, telefone, cnpj, ativo) VALUES("BATATA","(12)3125-1261","21.616.126/1295-19", true);
+INSERT INTO fornecimento(cod_fornecedor, cod_lanchonete) VALUES(7, 1);
+INSERT INTO fornecimento(cod_fornecedor, cod_lanchonete) VALUES(7, 2);
+INSERT INTO fornecimento(cod_fornecedor, cod_lanchonete) VALUES(7, 3);

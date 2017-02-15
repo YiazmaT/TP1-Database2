@@ -225,7 +225,7 @@
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/Images/rubbish-bin (1).png"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Deletar Funcion&#xe1;rio"/>
+        <Property name="text" type="java.lang.String" value="Desligar Funcion&#xe1;rio"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton3ActionPerformed"/>

@@ -141,7 +141,7 @@ public class RelatorioFuncionarios extends javax.swing.JDialog {
 
         jButton3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/rubbish-bin (1).png"))); // NOI18N
-        jButton3.setText("Deletar Funcionário");
+        jButton3.setText("Desligar Funcionário");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);

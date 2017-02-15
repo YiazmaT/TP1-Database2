@@ -30,3 +30,14 @@ UPDATE produto_atomico SET produto_atomico.nome = "COCA-COLA GARRAFA 1L", produt
 UPDATE lanchonete SET lanchonete.nome = "BURGUER QUEEN LATORRES", lanchonete.telefone = "(11)3446-2510", lanchonete.endereco_rua = "Caetéss", lanchonete.endereco_numero = 500, lanchonete.endereco_bairro = "Jardim Caiçaras", lanchonete.endereco_cidade = "Presidente Prudentes", lanchonete.endereco_cep = "19061-390", lanchonete.endereco_estado = "SP" WHERE lanchonete.id_lanchonete = 1;
 UPDATE lanchonete SET lanchonete.nome = "BURGUER QUEEN LATORRE", lanchonete.telefone = "(11)3446-2510", lanchonete.endereco_rua = "Caetés", lanchonete.endereco_numero = 500, lanchonete.endereco_bairro = "Jardim Caiçara", lanchonete.endereco_cidade = "Presidente Prudente", lanchonete.endereco_cep = "19061-390", lanchonete.endereco_estado = "SP" WHERE lanchonete.id_lanchonete = 1;
 UPDATE estoqueloja SET estoqueloja.quantidade = 55.0 WHERE estoqueloja.cod_lanchonete = 1 AND estoqueloja.cod_produto_atomico = 1;
+UPDATE caixa SET caixa.ativo = false WHERE caixa.id_caixa = 2;
+UPDATE fornecedor SET fornecedor.ativo = false WHERE fornecedor.id_fornecedor = 1;
+UPDATE fornecedor SET fornecedor.ativo = false WHERE fornecedor.id_fornecedor = 6;
+UPDATE fornecedor SET fornecedor.ativo = false WHERE fornecedor.id_fornecedor = 7;
+UPDATE produto SET produto.ativo = false WHERE produto.id_produto = 1;
+UPDATE produto SET produto.preco = produto.preco + (produto.preco*(100.0/100));
+UPDATE produto SET produto.preco = produto.preco - (produto.preco*(100.0/100));
+UPDATE produto SET produto.preco = produto.preco - (produto.preco*(100.0/100));
+UPDATE produto SET produto.preco = produto.preco + (produto.preco*(100.0/100));
+UPDATE produto SET produto.preco = produto.preco - (produto.preco*(50.0/100));
+UPDATE produto SET produto.preco = produto.preco - (produto.preco*(25.0/100));

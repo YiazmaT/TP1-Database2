@@ -195,6 +195,10 @@ public class Login extends javax.swing.JPanel {
             this.pai.setPermissaoUsuarioLogado(userLogado.getPermissao());
             this.pai.setIdUsuarioLoja(userLogado.getId_loja_que_trabalha());
             
+            BancoDeDados.setIdUsuarioLogado(userLogado.getId_user());
+            BancoDeDados.setPermissaoUsuarioLogado(userLogado.getPermissao());
+            BancoDeDados.setIdLojaQueTrabalha(userLogado.getId_loja_que_trabalha());
+            
             this.pai.chamarMenuInicial();
             this.pai.destravarMenus();
         }else{

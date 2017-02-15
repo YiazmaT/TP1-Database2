@@ -11,6 +11,7 @@ import ClassesLojas.Loja;
 import InterfaceDialogsAlteracaoDeDados.ModificarFornecedor;
 import InterfaceMain.Main;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -45,6 +46,7 @@ public class TodosOsFornecedores extends javax.swing.JDialog {
         fornecedoresTable = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Todos os Fornecedores");
@@ -79,6 +81,15 @@ public class TodosOsFornecedores extends javax.swing.JDialog {
             }
         });
 
+        jButton2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/rubbish-bin (1).png"))); // NOI18N
+        jButton2.setText("Apagar Fornecedor");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -89,6 +100,8 @@ public class TodosOsFornecedores extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1037, Short.MAX_VALUE))
                 .addContainerGap())
@@ -99,7 +112,9 @@ public class TodosOsFornecedores extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton1)
+                        .addComponent(jButton2)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 434, Short.MAX_VALUE)
                 .addContainerGap())
@@ -120,6 +135,22 @@ public class TodosOsFornecedores extends javax.swing.JDialog {
         
         this.preencherTabela();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        int linha = fornecedoresTable.getSelectedRow();
+        if(linha == -1) return;
+        
+        int confirm;
+        confirm = JOptionPane.showConfirmDialog(null, "Deseja Realmente Apagar esse Fornecedor? Este Fornecedor deixará de dar cobertura para todas as lojas cadastradas!!\n"
+                +"Caso deseje apenas trocar as lojas que o fornecedor possui cobertura, selecione a opção de \"Alterar Dados Cadastrados\""
+                , "Atenção!", JOptionPane.YES_NO_OPTION);
+        if(confirm == 0){
+            BancoDeDados.deletarFornecedor(this.fornecedoresArray.get(linha).getId_fornecedor());
+            this.preencherTabela();
+            return;
+        }
+        else return;
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     public void preencherTabela(){
         this.fornecedoresArray = new ArrayList<Fornecedor>();
@@ -145,6 +176,7 @@ public class TodosOsFornecedores extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable fornecedoresTable;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables

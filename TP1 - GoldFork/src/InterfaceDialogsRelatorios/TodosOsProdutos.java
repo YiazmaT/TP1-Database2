@@ -11,6 +11,7 @@ import ClasseProdutos.ProdutoAtomico;
 import InterfaceDialogsAlteracaoDeDados.ModificarProduto;
 import InterfaceMain.Main;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -52,6 +53,7 @@ public class TodosOsProdutos extends javax.swing.JDialog {
         composicaoTable = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -144,6 +146,15 @@ public class TodosOsProdutos extends javax.swing.JDialog {
             }
         });
 
+        jButton3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/rubbish-bin (1).png"))); // NOI18N
+        jButton3.setText("Apagar Produto");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -161,6 +172,8 @@ public class TodosOsProdutos extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton2)))
                 .addContainerGap())
         );
@@ -175,7 +188,8 @@ public class TodosOsProdutos extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jLabel1)
-                    .addComponent(jButton2))
+                    .addComponent(jButton2)
+                    .addComponent(jButton3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 234, Short.MAX_VALUE)
                 .addContainerGap())
@@ -216,6 +230,21 @@ public class TodosOsProdutos extends javax.swing.JDialog {
         this.listarProdutos();
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        int linha = tableProduto.getSelectedRow();
+        if(linha == -1) return;
+        
+        int confirm;
+        confirm = JOptionPane.showConfirmDialog(null, "Deseja Realmente Apagar este produto? O mesmo deixará de ser vendido em todas as lojas cadastras!"
+                , "Atenção!", JOptionPane.YES_NO_OPTION);
+        if(confirm == 0){
+            BancoDeDados.deletarProduto(this.todosProdutos.get(linha).getId_produto());
+            this.listarProdutos();
+            return;
+        }
+        else return;
+    }//GEN-LAST:event_jButton3ActionPerformed
+
     public void listarProdutos(){
         DefaultTableModel dtm = (DefaultTableModel) tableProduto.getModel();
         dtm.setRowCount(0);
@@ -232,6 +261,7 @@ public class TodosOsProdutos extends javax.swing.JDialog {
     private javax.swing.JTable composicaoTable;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;

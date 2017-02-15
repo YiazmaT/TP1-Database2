@@ -5,12 +5,14 @@ public class Fornecedor {
     private String nome;
     private String telefone;
     private String cnpj;
+    private boolean ativo;
 
-    public Fornecedor(int id_fornecedor, String nome, String telefone, String cnpj) {
+    public Fornecedor(int id_fornecedor, String nome, String telefone, String cnpj, boolean ativo) {
         this.id_fornecedor = id_fornecedor;
         this.nome = nome;
         this.telefone = telefone;
         this.cnpj = cnpj;
+        this.ativo = ativo;
     }
 
     public Fornecedor(int id_fornecedor, String nome) {

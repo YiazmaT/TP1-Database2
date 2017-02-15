@@ -11,7 +11,13 @@ import ClassesLojas.Loja;
 import ClassesNotas.NotaDeCompra;
 import ClassesNotas.NotaDeVenda;
 import InterfaceVendas.Pagamento;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -28,7 +34,6 @@ public class TodasAsNotasDeVenda extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         this.lojas = lojas;
-        this.preencherTabela();
     }
 
     /**
@@ -50,6 +55,13 @@ public class TodasAsNotasDeVenda extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        dataInicio = new javax.swing.JFormattedTextField();
+        jLabel6 = new javax.swing.JLabel();
+        dataFim = new javax.swing.JFormattedTextField();
+        todasAsNotas = new javax.swing.JRadioButton();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Notas de Venda");
@@ -129,6 +141,41 @@ public class TodasAsNotasDeVenda extends javax.swing.JDialog {
             }
         });
 
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel4.setText("Intervalo de Datas das Notas:");
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel5.setText("Inicio:");
+
+        dataInicio.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel6.setText("Fim:");
+
+        dataFim.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
+
+        todasAsNotas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        todasAsNotas.setText("Todas as Notas");
+        todasAsNotas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                todasAsNotasMouseClicked(evt);
+            }
+        });
+        todasAsNotas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                todasAsNotasActionPerformed(evt);
+            }
+        });
+
+        jButton2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/report.png"))); // NOI18N
+        jButton2.setText("Exibir Notas");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -141,12 +188,26 @@ public class TodasAsNotasDeVenda extends javax.swing.JDialog {
                     .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(dataInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(10, 10, 10)
+                                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel4))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(todasAsNotas)
+                                    .addComponent(dataFim, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(jLabel3)
                             .addComponent(jLabel1)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton1)))
+                                .addComponent(jButton1))
+                            .addComponent(jButton2))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -154,9 +215,21 @@ public class TodasAsNotasDeVenda extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(todasAsNotas))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(dataInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(dataFim, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 252, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -222,8 +295,77 @@ public class TodasAsNotasDeVenda extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    public void preencherTabela(){
+    private void todasAsNotasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_todasAsNotasMouseClicked
+        this.travarDatas();
+    }//GEN-LAST:event_todasAsNotasMouseClicked
+
+    private void todasAsNotasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_todasAsNotasActionPerformed
+        this.travarDatas();
+    }//GEN-LAST:event_todasAsNotasActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        if(todasAsNotas.isSelected()){
+            this.preencherTabelaTodasAsNotas();
+        }
+        else{
+            if(dataFim.getText().contains(" ") || dataInicio.getText().contains(" ") || dataFim.getText().equals("") || dataInicio.getText().equals("")){this.erro(2); return;}
+            SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+            SimpleDateFormat saida = new SimpleDateFormat("yyyy/MM/dd");
+            try {
+                Date data1 = formato.parse(dataInicio.getText());
+                Date data2 = formato.parse(dataFim.getText());
+                
+                if(data1.after(data2)){
+                    this.erro(3);
+                    return;
+                }
+                this.preecherTabelaComIntervalo(saida.format(data1), saida.format(data2));
+            } catch (ParseException ex) {
+                Logger.getLogger(TodasAsNotasDeCompra.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    public void preecherTabelaComIntervalo(String data1, String data2){
+        //limpar tabelas:
         DefaultTableModel dtm = (DefaultTableModel) notasDeVendaTable.getModel();
+        dtm.setRowCount(0);
+        DefaultTableModel clean1 = (DefaultTableModel) itensNotaTable.getModel();
+        clean1.setRowCount(0);
+        DefaultTableModel clean2 = (DefaultTableModel) pagamentosTable.getModel();
+        clean2.setRowCount(0);
+        
+        //montar tabela de notas
+        String []linha = new String[5];
+        
+        notas = new ArrayList<NotaDeVenda>();
+        ArrayList<NotaDeVenda> temporario = new ArrayList<NotaDeVenda>();
+        for(Loja lojaAtual:lojas){
+            temporario = BancoDeDados.notasDeVendaEntreDatas(lojaAtual.getId_lanchonete(), data1, data2);
+            if(!temporario.isEmpty()){
+                for(NotaDeVenda atual:temporario){
+                    linha[0] = String.valueOf(atual.getId_nota_venda());
+                    linha[1] = atual.getData();
+                    linha[2] = BancoDeDados.nomeDeUmCaixa(atual.getCod_caixa());
+                    linha[3] = String.valueOf(atual.getValor_total());
+                    linha[4] = lojaAtual.getNome();
+                    notas.add(atual);
+                    dtm.addRow(linha);
+                }
+            }
+        }
+    }
+    
+    public void preencherTabelaTodasAsNotas(){
+        //limpar tabelas:
+        DefaultTableModel dtm = (DefaultTableModel) notasDeVendaTable.getModel();
+        dtm.setRowCount(0);
+        DefaultTableModel clean1 = (DefaultTableModel) itensNotaTable.getModel();
+        clean1.setRowCount(0);
+        DefaultTableModel clean2 = (DefaultTableModel) pagamentosTable.getModel();
+        clean2.setRowCount(0);
+        
+        //montar tabela de notas
         String []linha = new String[5];
         
         notas = new ArrayList<NotaDeVenda>();
@@ -244,16 +386,42 @@ public class TodasAsNotasDeVenda extends javax.swing.JDialog {
         }
     }
     
+    public void travarDatas(){
+        if(todasAsNotas.isSelected()){
+            dataInicio.enable(false);
+            dataFim.enable(false);
+        }
+        else{
+            dataInicio.enable(true);
+            dataFim.enable(true);
+        }
+    }
+    
+    public void erro(int e){
+        switch(e){
+            case 1: JOptionPane.showMessageDialog(null, "Por Favor Insira todas as Datas!"); break;
+            case 2: JOptionPane.showMessageDialog(null, "Data Inválida!"); break;
+            case 3: JOptionPane.showMessageDialog(null, "Data de Inicio não pode ser Maior que data de Fim!"); break;
+        }
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JFormattedTextField dataFim;
+    private javax.swing.JFormattedTextField dataInicio;
     private javax.swing.JTable itensNotaTable;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable notasDeVendaTable;
     private javax.swing.JTable pagamentosTable;
+    private javax.swing.JRadioButton todasAsNotas;
     // End of variables declaration//GEN-END:variables
 }

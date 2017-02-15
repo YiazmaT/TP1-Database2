@@ -86,7 +86,8 @@ create table produto_atomico(
 create table produto(
 	id_produto int primary key auto_increment,
 	nome varchar(200) not null,
-	preco decimal(7,2) not null
+	preco decimal(7,2) not null,
+    ativo boolean not null
 );
 
 create table estoqueLoja(
@@ -115,7 +116,8 @@ create table fornecedor(
 	id_fornecedor int primary key auto_increment,
 	nome varchar(200) not null,
 	telefone varchar(13) not null,
-	cnpj varchar(18) not null
+	cnpj varchar(18) not null,
+    ativo boolean not null
 );
 
 create table fornecimento(
@@ -193,6 +195,33 @@ create table pagamento_cartao(
     constraint fk_cod_nota_venda_pagamento_cartao foreign key(cod_nota_venda) references nota_de_venda(id_nota_venda)
 );
 
+create table log_insert(
+	id int primary key auto_increment,
+	data timestamp not null,
+    permissao_usuario int not null,
+    cod_usuario int not null,
+    cod_loja int not null,
+    sentenca longtext
+);
+
+create table log_update(
+	id int primary key auto_increment,
+	data timestamp not null,
+    permissao_usuario int not null,
+    cod_usuario int not null,
+    cod_loja int not null,
+    sentenca longtext
+);
+
+create table log_delete(
+	id int primary key auto_increment,
+	data timestamp not null,
+    permissao_usuario int not null,
+    cod_usuario int not null,
+    cod_loja int not null,
+    sentenca longtext
+);
+
 ####                        ####
 ###### P R O C E D U R E S #####
 ####                        ####
@@ -201,7 +230,7 @@ DELIMITER $$
 DROP PROCEDURE IF EXISTS verificaIfLoginCaixaExistente $$
 CREATE PROCEDURE verificaIfLoginCaixaExistente(login varchar(50))
 BEGIN
-	set @x= (SELECT COUNT(*) from caixa where caixa.login = login);
+	set @x= (SELECT COUNT(*) from caixa where caixa.login = login and caixa.ativo = true);
 	if(@x = 0) then select "false" as Msg;
 	else select "true" as Msg;
 	end if;
@@ -213,7 +242,7 @@ DELIMITER $$
 DROP PROCEDURE IF EXISTS verificaIfLoginGerenteExistente $$
 CREATE PROCEDURE verificaIfLoginGerenteExistente(login varchar(50))
 BEGIN
-	set @x = (SELECT COUNT(*) from gerente where gerente.login = login);
+	set @x = (SELECT COUNT(*) from gerente where gerente.login = login and gerente.ativo = true);
 	if(@x = 0) then select "false" as Msg;
 	else select "true" as Msg;
 	end if;
@@ -224,10 +253,10 @@ DELIMITER $$
 DROP PROCEDURE IF EXISTS verificaIfCpfFuncionarioExistente $$
 CREATE PROCEDURE verificaIfCpfFuncionarioExistente(cpf varchar(14))
 BEGIN
-	set @x = (SELECT COUNT(*) from gerente where gerente.cpf = cpf);
-	set @y = (SELECT COUNT(*) from caixa where caixa.cpf = cpf);
-	set @z = (SELECT COUNT(*) from faxineiro where faxineiro.cpf = cpf);
-	set @w = (SELECT COUNT(*) from cozinheiro where cozinheiro.cpf = cpf);
+	set @x = (SELECT COUNT(*) from gerente where gerente.cpf = cpf and gerente.ativo = true);
+	set @y = (SELECT COUNT(*) from caixa where caixa.cpf = cpf and caixa.ativo = true);
+	set @z = (SELECT COUNT(*) from faxineiro where faxineiro.cpf = cpf and faxineiro.ativo = true);
+	set @w = (SELECT COUNT(*) from cozinheiro where cozinheiro.cpf = cpf and cozinheiro.ativo = true);
 	if((@x=0)&&(@y=0)&&(@z=0)&&(@w=0)) then select "false" as Msg;
 	else select "true" as Msg;
 	end if;
@@ -249,7 +278,7 @@ DELIMITER $$
 DROP PROCEDURE IF EXISTS verificaIfProdutoComNomeIgual $$
 CREATE PROCEDURE verificaIfProdutoComNomeIgual(nome varchar(50))
 BEGIN
-	set @x = (SELECT COUNT(*) from produto where produto.nome = nome);
+	set @x = (SELECT COUNT(*) from produto where produto.nome = nome and produto.ativo = true);
 	if(@x = 0) then select "false" as Msg;
 	else select "true" as Msg;
 	end if;
@@ -265,7 +294,7 @@ BEGIN
 		inner join lanchonete on idDono = lanchonete.cod_dono
 		inner join fornecimento on fornecimento.cod_lanchonete = lanchonete.id_lanchonete
 		inner join fornecedor on fornecedor.id_fornecedor = fornecimento.cod_fornecedor
-		where fornecedor.nome = nomeFornecedor
+		where fornecedor.nome = nomeFornecedor and fornecedor.ativo = true
     );
 	if(@x = 0) then select "false" as Msg;
 	else select "true" as Msg;
@@ -282,7 +311,7 @@ BEGIN
 		inner join lanchonete on idDono = lanchonete.cod_dono
 		inner join fornecimento on fornecimento.cod_lanchonete = lanchonete.id_lanchonete
 		inner join fornecedor on fornecedor.id_fornecedor = fornecimento.cod_fornecedor
-		where fornecedor.cnpj = cnpjFornecedor
+		where fornecedor.cnpj = cnpjFornecedor and fornecedor.ativo = true
     );
 	if(@x = 0) then select "false" as Msg;
 	else select "true" as Msg;
@@ -310,10 +339,10 @@ BEGIN
 	if(selec = 1) then select * from dono where dono.login = login and dono.senha=senha;
     end if;
     
-    if(selec = 2) then select * from caixa where caixa.login = login and caixa.senha = senha;
+    if(selec = 2) then select * from caixa where caixa.login = login and caixa.senha = senha and caixa.ativo = true;
     end if;
     
-    if(selec = 3) then select * from gerente where gerente.login = login and gerente.senha = senha;
+    if(selec = 3) then select * from gerente where gerente.login = login and gerente.senha = senha and caixa.ativo = true;
     end if;
     
 END $$
@@ -436,11 +465,11 @@ INSERT INTO produto_atomico(nome, unidade_medida) VALUES("OVO","Unidade");
 INSERT INTO produto_atomico(nome, unidade_medida) VALUES("PEITO DE FRANGO","Quilo");
 
 #produto
-INSERT INTO produto(nome, preco) VALUES("XBURGUER",10.0);
-INSERT INTO produto(nome, preco) VALUES("XBURGUER PICANHA",15.0);
-INSERT INTO produto(nome, preco) VALUES("XBURGUER TUDO",25.0);
-INSERT INTO produto(nome, preco) VALUES("COCA-COLA 1L",5.0);
-INSERT INTO produto(nome, preco) VALUES("COCA-COLA 600ml",7.0);
+INSERT INTO produto(nome, preco, ativo) VALUES("XBURGUER",10.0,true);
+INSERT INTO produto(nome, preco, ativo) VALUES("XBURGUER PICANHA",15.0,true);
+INSERT INTO produto(nome, preco, ativo) VALUES("XBURGUER TUDO",25.0,true);
+INSERT INTO produto(nome, preco, ativo) VALUES("COCA-COLA 1L",5.0,true);
+INSERT INTO produto(nome, preco, ativo) VALUES("COCA-COLA 600ml",7.0,true);
 
 #composicao_produto
 INSERT INTO composicao_produto(cod_produto, cod_produto_atomico, quantidade) VALUES (1,1,0.25);
@@ -469,11 +498,11 @@ INSERT INTO composicao_produto(cod_produto, cod_produto_atomico, quantidade) VAL
 INSERT INTO composicao_produto(cod_produto, cod_produto_atomico, quantidade) VALUES (5,10,1.0);
 
 #fornecedor
-INSERT INTO fornecedor(nome, telefone, cnpj) VALUES("DISTRIBUIDOR ALIMENTÍCIO TRIANGULO LTDA","(15)6184-8964","16.516.516/1489-64");
-INSERT INTO fornecedor(nome, telefone, cnpj) VALUES("FRIGORÍFICO SANTO ANASTÁCIO LTDA","(14)3518-8554","15.159.548/1268-55");
-INSERT INTO fornecedor(nome, telefone, cnpj) VALUES("ARMAZÉM DE PRODUTOS ALIMENTÍCIOS SÃO MANOEL LTDA","(12)4125-1251","18.192.849/2834-28");
-INSERT INTO fornecedor(nome, telefone, cnpj) VALUES("DESTRO ATACADISTA LTDA","(11)5652-1521","81.198.214/8961-42");
-INSERT INTO fornecedor(nome, telefone, cnpj) VALUES("BRETAS FORNECEDOR DE ALIMENTOS LTDA","(34)1521-2512","32.112.153/1624-84");
+INSERT INTO fornecedor(nome, telefone, cnpj, ativo) VALUES("DISTRIBUIDOR ALIMENTÍCIO TRIANGULO LTDA","(15)6184-8964","16.516.516/1489-64",true);
+INSERT INTO fornecedor(nome, telefone, cnpj, ativo) VALUES("FRIGORÍFICO SANTO ANASTÁCIO LTDA","(14)3518-8554","15.159.548/1268-55",true);
+INSERT INTO fornecedor(nome, telefone, cnpj, ativo) VALUES("ARMAZÉM DE PRODUTOS ALIMENTÍCIOS SÃO MANOEL LTDA","(12)4125-1251","18.192.849/2834-28",true);
+INSERT INTO fornecedor(nome, telefone, cnpj, ativo) VALUES("DESTRO ATACADISTA LTDA","(11)5652-1521","81.198.214/8961-42",true);
+INSERT INTO fornecedor(nome, telefone, cnpj, ativo) VALUES("BRETAS FORNECEDOR DE ALIMENTOS LTDA","(34)1521-2512","32.112.153/1624-84",true);
 
 #fornecimento
 INSERT INTO fornecimento(cod_fornecedor, cod_lanchonete) VALUES(1, 1);

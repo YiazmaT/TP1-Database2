@@ -8,3 +8,6 @@ DELETE FROM caixa WHERE caixa.id_caixa = 2;
 DELETE FROM composicao_produto WHERE composicao_produto.cod_produto = 1;
 DELETE FROM composicao_produto WHERE composicao_produto.cod_produto = 1;
 DELETE FROM composicao_produto WHERE composicao_produto.cod_produto = 6;
+DELETE FROM fornecimento WHERE fornecimento.cod_fornecedor = 1;
+DELETE FROM fornecimento WHERE fornecimento.cod_fornecedor = 6;
+DELETE FROM fornecimento WHERE fornecimento.cod_fornecedor = 7;

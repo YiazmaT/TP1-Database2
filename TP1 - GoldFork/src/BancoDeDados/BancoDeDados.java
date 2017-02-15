@@ -48,7 +48,23 @@ public class BancoDeDados {
     private static final String arqLogDelete = "LogDelete.txt";
     private static final String arqLogSelect = "LogSelect.txt";
     private static final String arqLogProcedureCall = "LogProcedureCall.txt";
+    
+    private static int idUsuarioLogado;
+    private static int permissaoUsuarioLogado;
+    private static int idLojaQueTrabalha;
 
+    public static void setIdUsuarioLogado(int idUsuarioLogado) {
+        BancoDeDados.idUsuarioLogado = idUsuarioLogado;
+    }
+
+    public static void setPermissaoUsuarioLogado(int permissaoUsuarioLogado) {
+        BancoDeDados.permissaoUsuarioLogado = permissaoUsuarioLogado;
+    }
+
+    public static void setIdLojaQueTrabalha(int idLojaQueTrabalha) {
+        BancoDeDados.idLojaQueTrabalha = idLojaQueTrabalha;
+    }
+    
     /*
      *-----SELECTS-----*
      */
@@ -226,7 +242,7 @@ public class BancoDeDados {
 
     public static ArrayList<Produto> recuperarTodosOsProdutos() {
         ArrayList<Produto> p = new ArrayList<Produto>();
-        String send = "SELECT * FROM produto"+";";
+        String send = "SELECT * FROM produto WHERE produto.ativo = true"+";";
         BancoDeDados.logGeral(send);
         BancoDeDados.logSelect(send);
 
@@ -236,7 +252,7 @@ public class BancoDeDados {
             ResultSet result = result = stat.executeQuery(send);
 
             while (result.next()) {
-                Produto atual = new Produto(result.getInt("id_produto"), result.getString("nome"), result.getFloat("preco"));
+                Produto atual = new Produto(result.getInt("id_produto"), result.getString("nome"), result.getFloat("preco"), result.getBoolean("ativo"));
                 p.add(atual);
             }
 
@@ -441,7 +457,7 @@ public class BancoDeDados {
     
     public static ArrayList<Fornecedor> todosOsFornecedoresDeUmaLoja(int id_loja){
         ArrayList<Fornecedor> fornecedores = new ArrayList<Fornecedor>();
-        String send = "SELECT id_fornecedor, nome, telefone, cnpj FROM (SELECT * FROM fornecimento WHERE fornecimento.cod_lanchonete = " + id_loja
+        String send = "SELECT id_fornecedor, nome, telefone, cnpj, ativo FROM (SELECT * FROM fornecimento WHERE fornecimento.cod_lanchonete = " + id_loja
                 + ") AS test INNER JOIN fornecedor ON test.cod_fornecedor = fornecedor.id_fornecedor"+";";
         BancoDeDados.logGeral(send);
         BancoDeDados.logSelect(send);
@@ -452,7 +468,7 @@ public class BancoDeDados {
             ResultSet result = result = stat.executeQuery(send);
 
             while (result.next()) {
-                Fornecedor forc = new Fornecedor(result.getInt("id_fornecedor"), result.getString("nome"), result.getString("telefone"), result.getString("cnpj"));
+                Fornecedor forc = new Fornecedor(result.getInt("id_fornecedor"), result.getString("nome"), result.getString("telefone"), result.getString("cnpj"), result.getBoolean("ativo"));
                 fornecedores.add(forc);
             }
 
@@ -615,7 +631,7 @@ public class BancoDeDados {
     
     public static ArrayList<Produto> itensDeUmaNotaVenda(int id_nota_de_venda){
         ArrayList<Produto> p = new ArrayList<Produto>();
-        String send = "SELECT id_produto, nome, quantidade, valor_unitario FROM (SELECT * FROM itens_nota_venda WHERE itens_nota_venda.cod_nota_venda = "+id_nota_de_venda
+        String send = "SELECT id_produto, nome, quantidade, valor_unitario, ativo FROM (SELECT * FROM itens_nota_venda WHERE itens_nota_venda.cod_nota_venda = "+id_nota_de_venda
                 + ") AS test INNER JOIN produto ON test.cod_produto = produto.id_produto"+";";
         BancoDeDados.logGeral(send);
         BancoDeDados.logSelect(send);
@@ -626,7 +642,7 @@ public class BancoDeDados {
             ResultSet result = result = stat.executeQuery(send);
 
             while (result.next()) {
-                Produto pp = new Produto(result.getInt("id_produto"), result.getString("nome"), result.getInt("quantidade"), result.getFloat("valor_unitario"));
+                Produto pp = new Produto(result.getInt("id_produto"), result.getString("nome"), result.getInt("quantidade"), result.getFloat("valor_unitario"), result.getBoolean("ativo"));
                 p.add(pp);
             }
 
@@ -799,6 +815,37 @@ public class BancoDeDados {
         return notas;
     }
     
+    public static ArrayList<NotaDeVenda> notasDeVendaEntreDatas(int id_loja, String data1, String data2){
+        ArrayList<NotaDeVenda> notas = new ArrayList<NotaDeVenda>();
+        String send = "SELECT * FROM nota_de_venda WHERE "
+        +"nota_de_venda.cod_lanchonete = "+id_loja
+        +" AND nota_de_venda.data BETWEEN "
+        +"\""+data1+"\""
+        +" AND "
+        +"\""+data2+"\""
+        +";";
+        BancoDeDados.logGeral(send);
+        BancoDeDados.logSelect(send);
+        
+        try {
+            Connection conn = DriverManager.getConnection(enderecoIP, BANCOusuario, BANCOsenha);
+            Statement stat = conn.createStatement();
+            ResultSet result = result = stat.executeQuery(send);
+
+            while (result.next()) {
+                NotaDeVenda n = new NotaDeVenda(result.getInt("id_nota_venda"), result.getString("data"), result.getFloat("valor_total"), result.getInt("cod_caixa"), result.getInt("cod_lanchonete"));
+                notas.add(n);
+            }
+
+            stat.close();
+            conn.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Falha ao conectar com o Banco de Dados!!\n" + ex.getMessage());
+        }
+
+        return notas;
+    }
+    
     /*
      *-----INSERTS-----*
      */
@@ -838,13 +885,13 @@ public class BancoDeDados {
                     Connection conn = DriverManager.getConnection(enderecoIP, BANCOusuario, BANCOsenha);
                     Statement stat = conn.createStatement();
 
-                    String send = "INSERT INTO caixa(nome, telefone, cpf, login, senha, cod_lanchonete) VALUES("
+                    String send = "INSERT INTO caixa(nome, telefone, cpf, login, senha, cod_lanchonete, ativo) VALUES("
                             + "\"" + nome + "\"" + ","
                             + "\"" + telefone + "\"" + ","
                             + "\"" + cpf + "\"" + ","
                             + "\"" + login + "\"" + ","
                             + "\"" + senha + "\"" + ","
-                            + idLoja + ")"+";";
+                            + idLoja +", true"+")"+";";
                     BancoDeDados.logGeral(send);
                     BancoDeDados.logInsert(send);
                     stat.executeUpdate(send);
@@ -862,13 +909,13 @@ public class BancoDeDados {
                     Connection conn = DriverManager.getConnection(enderecoIP, BANCOusuario, BANCOsenha);
                     Statement stat = conn.createStatement();
 
-                    String send = "INSERT INTO gerente(nome, telefone, cpf, login, senha, cod_lanchonete) VALUES("
+                    String send = "INSERT INTO gerente(nome, telefone, cpf, login, senha, cod_lanchonete, ativo) VALUES("
                             + "\"" + nome + "\"" + ","
                             + "\"" + telefone + "\"" + ","
                             + "\"" + cpf + "\"" + ","
                             + "\"" + login + "\"" + ","
                             + "\"" + senha + "\"" + ","
-                            + idLoja + ")"+";";
+                            + idLoja +", true"+")"+";";
                     BancoDeDados.logGeral(send);
                     BancoDeDados.logInsert(send);
                     stat.executeUpdate(send);
@@ -885,11 +932,11 @@ public class BancoDeDados {
                 try {
                     Connection conn = DriverManager.getConnection(enderecoIP, BANCOusuario, BANCOsenha);
                     Statement stat = conn.createStatement();
-                    String send = "INSERT INTO faxineiro(nome, telefone, cpf, cod_lanchonete) VALUES("
+                    String send = "INSERT INTO faxineiro(nome, telefone, cpf, cod_lanchonete, ativo) VALUES("
                             + "\"" + nome + "\"" + ","
                             + "\"" + telefone + "\"" + ","
                             + "\"" + cpf + "\"" + ","
-                            + idLoja + ")"+";";
+                            + idLoja +", true"+")"+";";
                     BancoDeDados.logGeral(send);
                     BancoDeDados.logInsert(send);
                     stat.executeUpdate(send);
@@ -906,11 +953,11 @@ public class BancoDeDados {
                 try {
                     Connection conn = DriverManager.getConnection(enderecoIP, BANCOusuario, BANCOsenha);
                     Statement stat = conn.createStatement();
-                    String send = "INSERT INTO cozinheiro(nome, telefone, cpf, cod_lanchonete) VALUES("
+                    String send = "INSERT INTO cozinheiro(nome, telefone, cpf, cod_lanchonete, ativo) VALUES("
                             + "\"" + nome + "\"" + ","
                             + "\"" + telefone + "\"" + ","
                             + "\"" + cpf + "\"" + ","
-                            + idLoja + ")"+";";
+                            + idLoja +", true"+")"+";";
                     BancoDeDados.logGeral(send);
                     BancoDeDados.logInsert(send);
                     stat.executeUpdate(send);
@@ -953,9 +1000,9 @@ public class BancoDeDados {
             Statement stat = conn.createStatement();
 
             //criando produto
-            String send = "INSERT INTO produto(nome, preco) VALUES("
+            String send = "INSERT INTO produto(nome, preco, ativo) VALUES("
                     + "\"" + nome + "\"" + ","
-                    + preco + ")"+";";
+                    + preco + ", true)"+";";
             BancoDeDados.logGeral(send);
             BancoDeDados.logInsert(send);
             stat.executeUpdate(send);
@@ -994,10 +1041,10 @@ public class BancoDeDados {
             Statement stat = conn.createStatement();
 
             //cadastrar o fornecedor;
-            String send = "INSERT INTO fornecedor(nome, telefone, cnpj) VALUES("
+            String send = "INSERT INTO fornecedor(nome, telefone, cnpj, ativo) VALUES("
                     + "\"" + nome + "\"" + ","
                     + "\"" + telefone + "\"" + ","
-                    + "\"" + cnpj + "\"" + ")"+";";
+                    + "\"" + cnpj + "\"" + ", true)"+";";
             BancoDeDados.logGeral(send);
             BancoDeDados.logInsert(send);
             stat.executeUpdate(send);
@@ -1400,6 +1447,88 @@ public class BancoDeDados {
         }
     }
 
+    public static void aumentarPreçoTodosOsProdutos(float porcentagem){
+        String send = "UPDATE produto SET produto.preco = produto.preco + (produto.preco*("+porcentagem+"/100))"+";";
+        BancoDeDados.logGeral(send);
+        BancoDeDados.logUpdate(send);
+        
+        try {
+            Connection conn = DriverManager.getConnection(enderecoIP, BANCOusuario, BANCOsenha);
+            Statement stat = conn.createStatement();
+            stat.executeUpdate(send);
+
+            stat.close();
+            conn.close();
+            JOptionPane.showMessageDialog(null, "Valores alterados com Sucesso!");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Falha ao conectar com o Banco de Dados!!\n" + ex.getMessage());
+        }
+    }
+    
+    public static void abaixarPreçoTodosOsProdutos(float porcentagem){
+        String send = "UPDATE produto SET produto.preco = produto.preco - (produto.preco*("+porcentagem+"/100))"+";";
+        BancoDeDados.logGeral(send);
+        BancoDeDados.logUpdate(send);
+        
+        try {
+            Connection conn = DriverManager.getConnection(enderecoIP, BANCOusuario, BANCOsenha);
+            Statement stat = conn.createStatement();
+            stat.executeUpdate(send);
+
+            stat.close();
+            conn.close();
+            JOptionPane.showMessageDialog(null, "Valores alterados com Sucesso!");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Falha ao conectar com o Banco de Dados!!\n" + ex.getMessage());
+        }
+    }
+    /*
+     *-----DELETES-----*
+     */
+    public static void deletarFornecedor(int id_fornecedor){
+        try {
+            Connection conn = DriverManager.getConnection(enderecoIP, BANCOusuario, BANCOsenha);
+            Statement stat = conn.createStatement();
+
+            //desligando fornecedor
+            String send = "UPDATE fornecedor SET fornecedor.ativo = false WHERE fornecedor.id_fornecedor = "+id_fornecedor+";";
+            stat.executeUpdate(send);
+            BancoDeDados.logGeral(send);
+            BancoDeDados.logUpdate(send);
+            
+            //apagando tabela de fornecimento      
+            send = "DELETE FROM fornecimento WHERE fornecimento.cod_fornecedor = "+id_fornecedor+";";
+            BancoDeDados.logGeral(send);
+            BancoDeDados.logDelete(send);
+            stat.executeUpdate(send);
+            
+            
+            stat.close();
+            conn.close();
+            JOptionPane.showMessageDialog(null, "Fornecedor apagado com Sucesso!");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Falha ao conectar com o Banco de Dados!!\n" + ex.getMessage());
+        }
+    }
+    
+    public static void deletarProduto(int id_produto){
+        try {
+            Connection conn = DriverManager.getConnection(enderecoIP, BANCOusuario, BANCOsenha);
+            Statement stat = conn.createStatement();
+
+            String send = "UPDATE produto SET produto.ativo = false WHERE produto.id_produto = "+id_produto+";";
+            stat.executeUpdate(send);
+            BancoDeDados.logGeral(send);
+            BancoDeDados.logUpdate(send);
+            
+            stat.close();
+            conn.close();
+            JOptionPane.showMessageDialog(null, "Produto apagado com Sucesso!");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Falha ao conectar com o Banco de Dados!!\n" + ex.getMessage());
+        }
+    }
+    
     /*
      *-----PROCEDURES CALL-----*
      */
